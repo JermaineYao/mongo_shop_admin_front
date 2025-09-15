@@ -1,0 +1,14 @@
+{
+  "endOfLine": "auto",
+  "singleQuote": true,
+  "semi": false,
+  "printWidth": 100,
+  "trailingComma": "none",
+  "tabWidth": 2,
+  "spaceBeforeFunctionParen": true,
+  "prettier.useTabs": false,
+  "wrapAttributes": false,
+  "sortAttributes": true,
+  "proseWrap": "always",
+  "bracketSpacing": true
+}
