@@ -1,21 +1,17 @@
-body {
-  background-color: $gray;
-}
+// @import '';
 
-.btn {
-  width: fit-content;
-  padding: 5px 15px;
-  background-color: pink;
-  cursor: pointer;
-}
+@forward './global';
 
-.page-view {
-  padding: 30px;
-  background-color: beige;
-}
+// pages
+@forward './pages/not_found';
+@forward './pages/landing_page';
 
-.black-layout {
-  padding: 30px;
-  background-color: $black;
-  color: cyan;
-}
+// components
+@forward './components/logo';
+@forward './components/footer';
+
+@forward './components/landingPage/head';
+@forward './components/landingPage/about';
+@forward './components/landingPage/professional';
+@forward './components/landingPage/design';
+@forward './components/landingPage/team';

@@ -1,0 +1,146 @@
+@use '@/assets/scss/variables' as *;
+@use '@/assets/scss/mixins' as *;
+
+.team {
+  .team_container {
+    display: block;
+    margin-top: 100px;
+
+    @include rwd-max(1024px) {
+      margin-top: 50px;
+    }
+  }
+
+  .team_wrap {
+    @include flex(column, nowrap, stretch, space-between);
+    gap: 70px;
+
+    .team-item {
+      @include flex(column, nowrap, flex-start, center, 20px);
+      opacity: 0;
+
+      span {
+        color: $gray-400;
+        font-size: $n;
+        text-align: center;
+        line-height: $m;
+      }
+
+      span.name {
+        font-size: $m;
+      }
+
+      @include rwd-max(1024px) {
+        span {
+          font-size: $d;
+        }
+
+        span.name {
+          font-size: $n;
+        }
+      }
+    }
+  }
+
+  .team-member_container {
+    @include flex(column, nowrap, stretch, space-between);
+    gap: 80px;
+    margin-top: 200px;
+    opacity: 0;
+
+    @include rwd-max(768px) {
+      margin-top: 100px;
+    }
+
+    .team-member_wrap {
+      @include flex(row, nowrap, stretch, flex-start);
+      opacity: 0;
+
+      @include rwd-max(768px) {
+        @include flex(column-reverse, nowrap, flex-start, center);
+        gap: 30px;
+      }
+
+      .team-img_wrap {
+        width: 350px;
+        height: 400px;
+        overflow: hidden;
+
+        @include rwd-max(768px) {
+          width: auto;
+        }
+
+        .team-img {
+          opacity: 1;
+        }
+
+        .member-1 {
+          background: url('/m1.jpg') 50% 0% / cover no-repeat;
+          opacity: 0.8;
+          width: 350px;
+          height: 400px;
+        }
+
+        .member-2 {
+          background: url('/m2.jpg') 50% 0% / cover no-repeat;
+          opacity: 0.8;
+          width: 350px;
+          height: 400px;
+        }
+
+        .member-3 {
+          background: url('/m3.png') 50% 0% / cover no-repeat;
+          opacity: 0.8;
+          width: 350px;
+          height: 400px;
+        }
+
+        .member-4 {
+          background: url('/m4.jpeg') 50% 0% / cover no-repeat;
+          opacity: 0.8;
+          width: 350px;
+          height: 400px;
+        }
+      }
+
+      .member_container {
+        @include flex(column, nowrap, stretch, space-between);
+        flex-grow: 1;
+        padding-left: 50px;
+
+        @include rwd-max(768px) {
+          padding-left: 0;
+        }
+
+        .member-name {
+          color: $gold-500;
+          font-size: $l;
+
+          @include rwd-max(1024px) {
+            font-size: $m;
+          }
+        }
+
+        hr {
+          width: 100%;
+          background-color: $gray-500;
+          transform: translateX(0%);
+        }
+
+        ul {
+          margin: auto;
+
+          li {
+            margin-top: 20px;
+            color: $gray-400;
+            font-size: $n;
+
+            @include rwd-max(1024px) {
+              font-size: $d;
+            }
+          }
+        }
+      }
+    }
+  }
+}

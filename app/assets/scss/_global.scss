@@ -1,0 +1,54 @@
+@use '@/assets/scss/variables' as *;
+@use '@/assets/scss/mixins' as *;
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Liu+Jian+Mao+Cao&family=Zen+Old+Mincho:wght@400;500;600;700;900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@200;300;400;500;600;700;900&display=swap');
+
+* ::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  width: 100vw;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+body {
+  background: linear-gradient(200deg, $bg-g1 0%, $bg-g2 100%);
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 100vh;
+  min-height: 100dvh;
+  font-family: 'Cormorant Garamond', 'Noto Serif TC', 'Zen Old Mincho', serif;
+}
+
+h1 {
+  margin: 0;
+}
+
+.view {
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+}
+
+.scroll_wrap {
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow-y: scroll;
+}
+
+.letter {
+  display: inline-block;
+  line-height: 1em;
+  opacity: 0;
+  transform: translateY(100px);
+}

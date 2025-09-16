@@ -1,0 +1,174 @@
+@use '@/assets/scss/variables' as *;
+@use '@/assets/scss/mixins' as *;
+
+.home {
+  @include no-select();
+  position: relative;
+  overflow-x: hidden;
+
+  .scroll_wrap {
+    position: relative;
+
+    .main {
+      @include flex(column, wrap, center, space-between);
+      width: inherit;
+      background-color: #0007447c;
+      opacity: 0;
+      backdrop-filter: blur(45px);
+      overflow-x: hidden;
+    }
+
+    .home-page {
+      width: inherit;
+      padding: 60px;
+      margin-bottom: 60px;
+      color: $white;
+
+      @include rwd-max(1024px) {
+        padding: 40px 20px;
+        margin-bottom: 20px;
+      }
+
+      hr {
+        transform: translateX(-200%);
+      }
+
+      hr.right {
+        transform: translateX(200%);
+      }
+
+      .caption_container {
+        @include flex(column, nowrap, flex-start, flex-start);
+        gap: 10px;
+        width: fit-content;
+        overflow: hidden;
+
+        &.right {
+          @include flex(column, nowrap, flex-end, flex-start);
+          gap: 10px;
+          margin-left: auto;
+        }
+
+        .caption-en {
+          color: $gray-400;
+          font-size: $n;
+          opacity: 0;
+        }
+
+        .caption-ch {
+          color: $gold-500;
+          font-size: $xl;
+          overflow: hidden;
+        }
+
+        @include rwd-max(1024px) {
+          .caption-ch {
+            font-size: $l;
+          }
+        }
+      }
+    }
+
+    .home-img_wrap {
+      position: relative;
+      overflow: hidden;
+
+      .home-img {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: inherit;
+        height: inherit;
+      }
+    }
+  }
+
+  nav.nav-home {
+    @include frl;
+    gap: 10px;
+    position: fixed;
+    color: rgb(238, 238, 238);
+    bottom: 60px;
+    right: 60px;
+    opacity: 0;
+    z-index: 50;
+
+    span {
+      font-size: $n;
+      color: $white-60;
+      letter-spacing: 2px;
+      transition: all 600ms ease;
+    }
+
+    @include rwd-max(1024px) {
+      bottom: 20px;
+      right: 20px;
+    }
+
+    &:hover {
+      cursor: pointer;
+
+      .circle-base {
+        fill: $white-15;
+      }
+
+      .circle-active {
+        opacity: 1;
+        animation: circleRotate 1.6s ease infinite;
+      }
+
+      text {
+        animation: textLight 1.6s ease infinite;
+      }
+
+      span {
+        color: $white;
+      }
+    }
+
+    .circle-base {
+      stroke: $white;
+      fill: $transparent;
+      transition: all 600ms ease;
+    }
+
+    .circle-active {
+      stroke: $white;
+      stroke-width: 2;
+      stroke-dasharray: 20;
+      opacity: 0;
+    }
+
+    text {
+      fill: $white-60;
+      transition: all 600ms ease;
+    }
+
+    @keyframes circleRotate {
+      0% {
+        transform: rotate(0deg);
+        transform-origin: center;
+      }
+
+      100% {
+        transform: rotate(360deg);
+        transform-origin: center;
+      }
+    }
+
+    @keyframes textLight {
+      0% {
+        fill: $white-60;
+      }
+
+      20% {
+        fill: $white;
+      }
+
+      100% {
+        fill: $white-60;
+      }
+    }
+  }
+}

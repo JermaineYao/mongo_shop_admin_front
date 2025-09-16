@@ -1,0 +1,63 @@
+@use '@/assets/scss/variables' as *;
+@use '@/assets/scss/mixins' as *;
+
+.professional {
+  .professional_container {
+    @include flex(row, nowrap, stretch, flex-start);
+    margin-top: 100px;
+
+    @include rwd-max(1024px) {
+      @include flex(column, nowrap, stretch, space-between);
+      gap: 100px;
+      margin-top: 50px;
+    }
+
+    .professional_wrap {
+      @include flex(column, nowrap, stretch, space-between);
+      gap: 70px;
+      flex-grow: 1;
+
+      .professional-item {
+        @include flex(column, nowrap, center, space-between, 20px);
+        opacity: 0;
+
+        span {
+          color: $gray-400;
+          font-size: $n;
+          text-align: center;
+          line-height: $m;
+        }
+
+        span.name {
+          font-size: $m;
+        }
+
+        @include rwd-max(1024px) {
+          span {
+            font-size: $d;
+          }
+
+          span.name {
+            font-size: $n;
+          }
+        }
+      }
+    }
+
+    .home-img_wrap {
+      width: 40vw;
+
+      @include rwd-max(1024px) {
+        width: 100%;
+        height: 500px;
+      }
+
+      .home-img {
+        opacity: 0;
+        background: url('/professional2.jpg') 50% 0% / cover no-repeat;
+        height: 1000px;
+        transform: translateX(-100%);
+      }
+    }
+  }
+}

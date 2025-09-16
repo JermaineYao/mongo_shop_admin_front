@@ -1,0 +1,68 @@
+@use '@/assets/scss/variables' as *;
+@use '@/assets/scss/mixins' as *;
+
+// @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
+
+.not-found {
+  @include no-select();
+  @include flex(column, nowrap, center, flex-start);
+  gap: 200px;
+  height: 100vh;
+  height: 100dvh;
+  padding-top: 10vh;
+  padding-top: 10dvh;
+  // font-family: 'Montserrat', sans-serif;
+  font-family: 'Noto Serif TC', serif;
+  // .login_wrap {
+  //   @include flex(column, nowrap, stretch, space-between);
+  //   width: 475px;
+  //   height: 100vh;
+  //   height: 100dvh;
+
+  //   @include rwd-max(767px) {
+  //     @include flex(column, nowrap, stretch, flex-start);
+  //     gap: 100px;
+  //     width: 100vw;
+  //     padding: 20px;
+  //     height: 100vh;
+  //     height: 100dvh;
+  //   }
+  // }
+
+  .not-found_wrap {
+    @include fcc;
+    gap: 30px;
+
+    span.not-found-404 {
+      font-size: 80px;
+      color: $gray-500;
+      opacity: 0.6;
+
+      @include rwd-max(1024px) {
+        font-size: 60px;
+      }
+
+      @include rwd-max(768px) {
+        font-size: 40px;
+      }
+    }
+
+    .btn-return {
+      @include fcc;
+      @include glass($black-20);
+      align-self: flex-end;
+      padding: 10px 10px;
+      width: 200px;
+      cursor: pointer;
+
+      span {
+        color: $gray-400;
+      }
+
+      &:hover {
+        background-color: $white-15;
+        transform: translate(2px, 2px);
+      }
+    }
+  }
+}

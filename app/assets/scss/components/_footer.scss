@@ -1,0 +1,50 @@
+@use '@/assets/scss/variables' as *;
+@use '@/assets/scss/mixins' as *;
+
+.footer {
+  @include flex(row, nowrap, center, flex-start);
+  gap: 30px;
+  width: 100vw;
+  padding: 40px 60px;
+  background-color: $black-20;
+
+  @include rwd-max(1024px) {
+    @include flex(column, nowrap, center, flex-start, 30px);
+    padding: 15px 20px;
+  }
+
+  // .logo {
+  //   margin: 0 auto;
+  // }
+
+  .footer_container {
+    @include flex(column, nowrap, stretch, flex-start, 20px);
+    flex-grow: 1;
+    // border-left: 1px solid $dg;
+
+    .icons {
+      @include frc;
+      gap: 30px;
+
+      .n-icon {
+        cursor: pointer;
+
+        svg path {
+          transition: all 400ms ease;
+        }
+
+        &:hover {
+          svg path {
+            fill: $white !important;
+          }
+        }
+      }
+    }
+  }
+
+  .copy-right,
+  .alert {
+    @include fcc;
+    color: $gray-500;
+  }
+}

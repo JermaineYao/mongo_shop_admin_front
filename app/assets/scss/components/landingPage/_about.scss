@@ -1,0 +1,44 @@
+@use '@/assets/scss/variables' as *;
+@use '@/assets/scss/mixins' as *;
+
+.about {
+  .about_container {
+    display: block;
+    margin-top: 100px;
+
+    @include rwd-max(1024px) {
+      margin-top: 50px;
+    }
+  }
+
+  .about_wrap {
+    @include flex(column, nowrap, stretch, flex-start);
+    gap: 70px;
+
+    .about-item {
+      @include flex(column, nowrap, center, flex-start, 20px);
+      opacity: 0;
+
+      span {
+        color: $gray-400;
+        font-size: $n;
+        text-align: center;
+        line-height: $m;
+      }
+
+      span.name {
+        font-size: $m;
+      }
+
+      @include rwd-max(1024px) {
+        span {
+          font-size: $d;
+        }
+
+        span.name {
+          font-size: $n;
+        }
+      }
+    }
+  }
+}
