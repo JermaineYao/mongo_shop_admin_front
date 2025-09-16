@@ -6,7 +6,7 @@ import { LogoFacebook, LogoInstagram, LogoYoutube, LogoTwitter } from '@vicons/i
 
 <template>
   <div class="footer">
-    <Logo :large="false" />
+    <LogoSmall />
 
     <div class="footer_container">
       <div class="icons">
