@@ -42,6 +42,16 @@
     }
   }
 
+  .team-description {
+    @include fcc;
+    gap: 70px;
+
+    .team-item {
+      @include fcc;
+      gap: 20px;
+    }
+  }
+
   .team-member_container {
     @include flex(column, nowrap, stretch, space-between);
     gap: 80px;

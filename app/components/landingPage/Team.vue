@@ -35,17 +35,15 @@ onMounted(() => {
             gsap.to('.team .caption-en', { opacity: 1, duration: 0.3 })
             gsap.to('.team-item', {
               opacity: 1,
-              duration: 0.15,
-              delay: function (j) {
-                return j + 0.15
-              },
+              duration: 0.1,
+
               onComplete: function () {
                 gsap.to('.team-member_container', { opacity: 1, duration: 0.1 })
                 gsap.to('.team-member_wrap', {
                   opacity: 1,
-                  duration: 0.8,
+                  duration: 0.6,
                   delay: function (k) {
-                    return k * 0.2
+                    return k * 0.15
                   }
                 })
               }
@@ -70,7 +68,7 @@ onMounted(() => {
     <hr class="team-hr" />
 
     <article class="team_container">
-      <div class="team_wrap">
+      <div class="team_wrap team-description">
         <div class="team-item">
           <span>陶工坊是由一群專業的人士組成的團隊。</span>
           <span>都對陶瓷藝術充滿熱愛，</span>
