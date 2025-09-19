@@ -1,6 +1,10 @@
-// @import '';
-
 @forward './global';
+
+// navie ui
+@forward './navie_ui/ui';
+
+// layout
+@forward './layout/shop_layout';
 
 // pages
 @forward './pages/not_found';
@@ -15,3 +19,5 @@
 @forward './components/landingPage/professional';
 @forward './components/landingPage/design';
 @forward './components/landingPage/team';
+
+@forward './components/shopLayout/nav';

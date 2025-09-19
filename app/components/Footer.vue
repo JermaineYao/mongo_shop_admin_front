@@ -1,30 +1,16 @@
-<script setup>
-import { NIcon } from 'naive-ui'
-
-import { LogoFacebook, LogoInstagram, LogoYoutube, LogoTwitter } from '@vicons/ionicons5'
-</script>
-
 <template>
   <div class="footer">
-    <LogoSmall />
-
     <div class="footer_container">
-      <div class="icons">
-        <n-icon size="36" color="rgb(182, 182, 182)">
-          <LogoFacebook />
-        </n-icon>
+      <div class="footer-main">
+        <LogoSmall />
+        <LogoMobile />
 
-        <n-icon size="36" color="rgb(182, 182, 182)">
-          <LogoInstagram />
-        </n-icon>
-
-        <n-icon size="36" color="rgb(182, 182, 182)">
-          <LogoYoutube />
-        </n-icon>
-
-        <n-icon size="36" color="rgb(182, 182, 182)">
-          <LogoTwitter />
-        </n-icon>
+        <div class="icons">
+          <IconFaceBook />
+          <IconInstagram />
+          <IconYouTube />
+          <IconTwitter />
+        </div>
       </div>
 
       <div class="footer-description">

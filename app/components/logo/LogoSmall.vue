@@ -1,6 +1,6 @@
 <template>
   <div class="logo-small">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 474 119" width="400px" height="100px">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 474 119" width="200px" height="52px">
       <g id="logo-group" data-name="logo-path" transform="translate(-353.904 -399.232)">
         <path
           id="logo-path"

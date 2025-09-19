@@ -58,6 +58,13 @@ onMounted(() => {
     observer.value.observe(target.value)
   })
 })
+
+onUnmounted(() => {
+  if (observer.value) {
+    observer.value.disconnect()
+    observer.value = null
+  }
+})
 </script>
 
 <template>

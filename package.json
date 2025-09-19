@@ -11,19 +11,19 @@
   },
   "dependencies": {
     "@nuxt/fonts": "^0.11.4",
-    "@nuxt/icon": "^2.0.0",
     "@nuxt/image": "^1.11.0",
+    "@pinia/nuxt": "^0.11.2",
     "gsap": "^3.13.0",
     "normalize.css": "^8.0.1",
     "nuxt": "^4.1.1",
     "nuxtjs-naive-ui": "^1.0.2",
+    "pinia": "^3.0.3",
     "vue": "^3.5.21",
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.9.0",
     "@types/node": "^24.5.0",
-    "@vicons/ionicons5": "^0.13.0",
     "eslint": "^9.35.0",
     "naive-ui": "^2.43.1",
     "sass": "^1.92.1"

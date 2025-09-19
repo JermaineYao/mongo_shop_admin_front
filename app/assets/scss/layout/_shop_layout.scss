@@ -1,0 +1,29 @@
+@use '@/assets/scss/variables' as *;
+@use '@/assets/scss/mixins' as *;
+
+.shop-layout {
+  @include flex(column, nowrap, stretch, flex-start);
+
+  .scroll_wrap {
+    @include flex(column, nowrap, stretch, flex-start);
+    flex-grow: 1;
+  }
+
+  .page {
+    order: 1;
+    width: 100vw;
+    max-width: 2560px;
+    align-self: center;
+    padding: 92px 40px 0px 40px;
+    opacity: 1;
+
+    @include rwd-max(1024px) {
+      padding: 106px 20px 40px 20px;
+    }
+  }
+
+  .footer {
+    order: 2;
+    margin-top: auto;
+  }
+}

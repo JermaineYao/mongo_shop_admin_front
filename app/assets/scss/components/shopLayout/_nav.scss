@@ -1,0 +1,87 @@
+@use '@/assets/scss/variables' as *;
+@use '@/assets/scss/mixins' as *;
+
+.shop-nav {
+  @include glass($black-20);
+  @include flex(row, nowrap, center, space-between);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  padding: 20px;
+  z-index: 60;
+
+  .logo-mobile,
+  .logo-small {
+    cursor: pointer;
+  }
+
+  .logo-mobile {
+    display: none;
+  }
+
+  @include rwd-max(768px) {
+    padding: 15px 10px 15px 20px;
+
+    .logo-mobile {
+      display: block;
+    }
+
+    .logo-small {
+      display: none;
+    }
+  }
+
+  .line-verticle {
+    width: 1px;
+    height: 34px;
+    background-color: $white-60;
+  }
+
+  .actions_container {
+    @include frl;
+    gap: 15px;
+
+    // @include rwd-max(768px) {
+    //   gap: 8px;
+    //   padding: 10px 10px 10px 20px;
+    // }
+  }
+
+  .icon_wrap {
+    @include fcc;
+    width: 40px;
+    height: 46px;
+  }
+
+  .user-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  svg.logout:hover {
+    filter: drop-shadow(0 0 3px $pink-700) drop-shadow(0 0 3px $pink-300);
+
+    path {
+      stroke: $white;
+    }
+  }
+
+  svg.login:hover {
+    filter: drop-shadow(0 0 3px $sky-300) drop-shadow(0 0 3px $sky-300);
+
+    path {
+      stroke: $white;
+    }
+  }
+
+  svg.heart {
+    filter: drop-shadow(0 0 1px $pink-300) drop-shadow(0 0 3px $pink-300);
+
+    path {
+      fill: $pink-300;
+    }
+  }
+}
