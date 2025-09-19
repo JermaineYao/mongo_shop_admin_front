@@ -1,0 +1,128 @@
+@use '@/assets/scss/variables' as *;
+@use '@/assets/scss/mixins' as *;
+
+.products-list_container {
+  @include flex(column, nowrap, stretch, flex-start, 20px);
+  flex-grow: 1;
+
+  .search_container {
+    @include flex(column, nowrap, flex-end, flex-start);
+    opacity: 1;
+    // position: relative;
+
+    @include rwd-max(1366px) {
+      @include glass($black-05);
+      display: none;
+      position: fixed;
+      top: 160px;
+      left: 0;
+      width: 100vw;
+      padding: 0 20px;
+    }
+
+    @include rwd-max(768px) {
+      top: 140px;
+    }
+
+    .search_wrap {
+      @include grid(250px, 20px, 0px);
+      width: 100%;
+
+      @include rwd-max(768px) {
+        @include grid(300px, 0px, 0px);
+      }
+
+      .search-item {
+        @include flex(column, nowrap, flex-start, flex-start);
+        padding: 20px 0;
+
+        @include rwd-max(768px) {
+          padding: 10px 0;
+        }
+
+        .search-item-name {
+          color: $gray-400;
+          font-size: $s;
+          padding-left: 2px;
+        }
+      }
+    }
+  }
+
+  .search-tab_wrap {
+    @include frl;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 20;
+    height: 45px;
+    padding: 5px 10px;
+    background-color: $purple-900;
+    cursor: pointer;
+
+    &:hover {
+      span {
+        color: $white;
+      }
+    }
+
+    span {
+      @include fcc;
+      width: 100px;
+      height: 45px;
+      font-size: $d;
+      transition: all 500ms ease;
+    }
+
+    svg {
+      circle {
+        fill: $gray-500;
+
+        transition: all 500ms ease;
+      }
+    }
+
+    &.open {
+      @include glass($purple-900);
+      position: fixed;
+      top: 110px;
+      right: 0;
+      display: none;
+      color: $gray-400;
+
+      @include rwd-max(1366px) {
+        display: flex;
+      }
+    }
+
+    &.close {
+      display: none;
+      position: fixed;
+      top: -50px;
+      right: 0;
+
+      @include rwd-max(1366px) {
+        display: flex;
+      }
+
+      span {
+        @include fcc;
+        width: 60px;
+        height: 45px;
+        font-size: $d;
+        color: $gray-400;
+        transition: all 500ms ease;
+      }
+
+      // @include rwd-max(768px) {
+      //   top: -50px;
+      //   right: 0;
+      // }
+    }
+  }
+
+  .products-list {
+    display: flex;
+    flex-grow: 1;
+  }
+}

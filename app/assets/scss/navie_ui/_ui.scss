@@ -2,28 +2,11 @@
 @use '@/assets/scss/mixins' as *;
 
 .n-input {
-  // background-color: $transparent;
-  // // --n-text-color: #d30000 !important;
-  // --n-placeholder-color: rgb(138, 138, 138) !important;
-  // --n-border-radius: 0 !important;
-
-  // --n-border-hover: 0px solid #ff6600 !important;
-  // --n-border-focus: 0px solid #ff0000 !important;
-  // --n-box-shadow-focus: 0 0 0 0px rgba(255, 0, 0, 0.25) !important;
-  // --n-color-focus: $black-20 !important;
-  // --n-height: 46px !important;
-
   .n-input-wrapper {
     @include glass($black-20);
     padding: 0px 15px;
   }
 }
-
-// .n-input .n-input__border,
-// .n-input .n-input__state-border {
-//   --n-border: 0px solid rgb(224, 224, 230) !important;
-//   border-radius: 0px !important;
-// }
 
 .n-input .n-input__input-el,
 .n-input .n-input__textarea-el {
@@ -31,4 +14,23 @@
   color: rgba(218, 201, 166, 0.8) !important;
   font-size: $n;
   letter-spacing: 1px;
+}
+
+.n-select,
+.n-base-select-menu {
+  @include glass($black-20);
+}
+
+/* 被選中項目的背景色 */
+.n-base-select-option.n-base-select-option--selected {
+  background: $black-20 !important;
+  color: $white !important;
+
+  &:hover {
+    background-color: $black-20 !important;
+  }
+
+  &::before {
+    background-color: $black-20 !important;
+  }
 }

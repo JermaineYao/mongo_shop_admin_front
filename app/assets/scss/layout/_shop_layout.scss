@@ -10,6 +10,8 @@
   }
 
   .page {
+    display: flex;
+    flex-grow: 1;
     order: 1;
     width: 100vw;
     max-width: 2560px;
@@ -18,12 +20,12 @@
     opacity: 1;
 
     @include rwd-max(1024px) {
-      padding: 106px 20px 40px 20px;
+      padding: 80px 20px 40px 20px;
     }
   }
 
   .footer {
     order: 2;
-    margin-top: auto;
+    // margin-top: auto;
   }
 }
