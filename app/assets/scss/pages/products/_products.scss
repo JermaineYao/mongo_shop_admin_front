@@ -6,23 +6,10 @@
   flex-grow: 1;
 
   .search_container {
-    @include flex(column, nowrap, flex-end, flex-start);
+    @include flex(column, nowrap, flex-end, flex-start, 20px);
     opacity: 1;
     // position: relative;
-
-    @include rwd-max(1366px) {
-      @include glass($black-05);
-      display: none;
-      position: fixed;
-      top: 160px;
-      left: 0;
-      width: 100vw;
-      padding: 0 20px;
-    }
-
-    @include rwd-max(768px) {
-      top: 140px;
-    }
+    z-index: 100;
 
     .search_wrap {
       @include grid(250px, 20px, 0px);
@@ -34,33 +21,79 @@
 
       .search-item {
         @include flex(column, nowrap, flex-start, flex-start);
-        padding: 20px 0;
+        padding: 20px 0 0 0;
 
         @include rwd-max(768px) {
           padding: 10px 0;
         }
 
         .search-item-name {
-          color: $gray-400;
+          color: $white;
           font-size: $s;
           padding-left: 2px;
         }
+
+        .n-input-number {
+          width: 100%;
+        }
       }
+    }
+
+    .action_wrap {
+      @include frc;
+      gap: 20px;
+
+      @include rwd-max(1366px) {
+        margin-top: 40px;
+      }
+
+      @include rwd-max(768px) {
+        width: 100%;
+
+        .btn {
+          flex-grow: 1;
+        }
+      }
+
+      .cancel {
+        display: none;
+
+        @include rwd-max(1366px) {
+          display: flex;
+        }
+      }
+    }
+
+    @include rwd-max(1366px) {
+      @include glass($white-15);
+      display: none;
+      position: fixed;
+      top: 90px;
+      left: 0;
+      width: 100vw;
+      padding: 0 20px 20px 20px;
+    }
+
+    @include rwd-max(768px) {
+      @include glass($purple-900);
+      top: 82px;
     }
   }
 
   .search-tab_wrap {
     @include frl;
+    @include glass($black-05);
     position: absolute;
     top: 0;
     right: 0;
     z-index: 20;
     height: 45px;
     padding: 5px 10px;
-    background-color: $purple-900;
     cursor: pointer;
 
     &:hover {
+      background-color: $white-15;
+
       span {
         color: $white;
       }
@@ -76,19 +109,18 @@
 
     svg {
       circle {
-        fill: $gray-500;
+        fill: $white;
 
         transition: all 500ms ease;
       }
     }
 
     &.open {
-      @include glass($purple-900);
       position: fixed;
       top: 110px;
       right: 0;
       display: none;
-      color: $gray-400;
+      color: $white;
 
       @include rwd-max(1366px) {
         display: flex;
@@ -110,7 +142,7 @@
         width: 60px;
         height: 45px;
         font-size: $d;
-        color: $gray-400;
+        color: $white;
         transition: all 500ms ease;
       }
 
@@ -121,8 +153,95 @@
     }
   }
 
-  .products-list {
-    display: flex;
+  .products-list_wrap {
+    @include flex(column, nowrap, center, flex-start, 30px);
     flex-grow: 1;
+    padding: 20px 0;
+
+    .products-list {
+      @include grid(340px, 30px, 30px);
+      width: 100%;
+
+      article {
+        position: relative;
+
+        .sold-out_wrap {
+          background-color: $black-20;
+          @include fcc;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 20;
+
+          .sold-out {
+            color: $white;
+            font-size: $n;
+          }
+        }
+      }
+    }
+
+    .product_wrap {
+      @include flex(column, nowrap, stretch, flex-start, 10px);
+      padding: 15px;
+      cursor: pointer;
+
+      .names {
+        @include flex(column, nowrap, flex-start, flex-start);
+
+        span {
+          color: $gray-400;
+          transition: all 500ms ease;
+        }
+
+        .name-main {
+          font-size: $n;
+        }
+
+        .name-sub {
+          font-size: $s;
+        }
+      }
+
+      .product-image {
+        width: 100%;
+        height: 300px;
+        opacity: 0.8;
+        transition: all 500ms ease;
+
+        @include rwd-max(1366px) {
+          opacity: 1;
+        }
+      }
+
+      .price_wrap {
+        .price {
+          font-size: $m;
+          color: $gold-500;
+          margin-right: 10px;
+        }
+
+        .price-unit {
+          font-size: $xs;
+          color: $gray-400;
+        }
+      }
+
+      &:hover {
+        .names span {
+          color: $white;
+        }
+
+        .product-image {
+          opacity: 1;
+        }
+      }
+    }
+
+    .n-pagination {
+      margin-top: auto;
+    }
   }
 }

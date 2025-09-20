@@ -3,27 +3,45 @@
 
 .n-input {
   .n-input-wrapper {
-    @include glass($black-20);
+    @include glass($white-15);
     padding: 0px 15px;
   }
 }
 
 .n-input .n-input__input-el,
 .n-input .n-input__textarea-el {
-  caret-color: rgba(218, 201, 166, 0.8) !important;
-  color: rgba(218, 201, 166, 0.8) !important;
+  caret-color: $white !important;
+  color: $white !important;
   font-size: $n;
   letter-spacing: 1px;
 }
 
+.n-input-number {
+  .n-base-icon svg line,
+  .n-base-icon svg path {
+    stroke: $gray-400 !important;
+
+    &:hover {
+      stroke: $white !important;
+    }
+  }
+
+  .n-button:hover {
+    .n-base-icon svg line,
+    .n-base-icon svg path {
+      stroke: $white !important;
+    }
+  }
+}
+
 .n-select,
 .n-base-select-menu {
-  @include glass($black-20);
+  @include glass($white-15);
 }
 
 /* 被選中項目的背景色 */
 .n-base-select-option.n-base-select-option--selected {
-  background: $black-20 !important;
+  background: $black-05 !important;
   color: $white !important;
 
   &:hover {
@@ -31,6 +49,6 @@
   }
 
   &::before {
-    background-color: $black-20 !important;
+    background-color: $purple-500 !important;
   }
 }

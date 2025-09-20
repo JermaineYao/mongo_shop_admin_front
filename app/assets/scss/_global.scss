@@ -58,18 +58,18 @@ svg.icon {
   transition: all 500ms ease;
 
   path {
-    stroke: $gray-400 !important;
+    stroke: $white !important;
     transition: all 500ms ease;
   }
 
   circle {
-    stroke: $gray-400 !important;
+    stroke: $white !important;
     transition: all 500ms ease;
   }
 
   &.filled {
     path {
-      fill: $gray-400;
+      fill: $white;
       transition: all 500ms ease;
     }
   }
@@ -87,6 +87,32 @@ svg.icon {
       path {
         fill: $white !important;
       }
+    }
+  }
+}
+
+.btn {
+  @include no-select();
+  @include frc;
+  @include glass($white-15);
+  gap: 10px;
+  width: fit-content;
+  padding: 5px 15px;
+  cursor: pointer;
+  transition: all 500ms ease;
+
+  span {
+    color: $white-60;
+    font-size: $d;
+    white-space: nowrap;
+  }
+
+  &:hover {
+    background-color: $black-20;
+    transform: translate(2px, 2px);
+
+    span {
+      color: $white;
     }
   }
 }
