@@ -22,36 +22,36 @@ export default defineNuxtPlugin((nuxtApp) => {
 
     onResponse({ response }) {
       return response._data
+    },
+
+    onResponseError({ request, response, options }) {
+      // const tried = options._triedRefresh === true
+
+      // if (response?.status === 401 && !tried) {
+      //   // 1) 先刷新
+      //   await api('/auth/refresh', { method: 'POST' })
+      //   // 2) 標記避免無限重試
+      //   options._triedRefresh = true
+      //   // 3) 重送原請求（⚠️ 這裡不要用 TS 的 `as any`）
+      //   return await api(request, { ...options })
+      // }
+
+      // if (response?.status === 401 && import.meta.client) {
+      //   // 在 plugin 內拿當前路由較保險的寫法：
+      //   const current = nuxtApp.$router?.currentRoute?.value?.fullPath || '/'
+      //   navigateTo(`/login?redirect=${encodeURIComponent(current)}`)
+      // }
+
+      throw createError({
+        statusCode: response?.status || 500,
+        messag:
+          response?._data?.msg ||
+          response?._data?.message ||
+          response?.statusText ||
+          'Unknown Error',
+        data: response?._data
+      })
     }
-
-    // async onResponseError({ request, response, options }) {
-    //   const tried = options._triedRefresh === true
-
-    //   if (response?.status === 401 && !tried) {
-    //     // 1) 先刷新
-    //     await api('/auth/refresh', { method: 'POST' })
-    //     // 2) 標記避免無限重試
-    //     options._triedRefresh = true
-    //     // 3) 重送原請求（⚠️ 這裡不要用 TS 的 `as any`）
-    //     return await api(request, { ...options })
-    //   }
-
-    //   if (response?.status === 401 && import.meta.client) {
-    //     // 在 plugin 內拿當前路由較保險的寫法：
-    //     const current = nuxtApp.$router?.currentRoute?.value?.fullPath || '/'
-    //     navigateTo(`/login?redirect=${encodeURIComponent(current)}`)
-    //   }
-
-    //   throw createError({
-    //     statusCode: response?.status || 500,
-    //     statusMessage:
-    //       response?._data?.msg ||
-    //       response?._data?.message ||
-    //       response?.statusText ||
-    //       'Unknown Error',
-    //     data: response?._data
-    //   })
-    // }
   })
 
   const http = {

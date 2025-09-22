@@ -34,13 +34,13 @@ export const useUserStore = defineStore('userStore', () => {
     modifiedAt: null
   })
 
-  const login = ref(false)
+  const isUserLogin = ref(false)
 
   function resetUser() {
     for (const key in userDefault) user[key] = userDefault[key]
 
-    login.value = false
+    isUserLogin.value = false
   }
 
-  return { user, login, resetUser }
+  return { user, isUserLogin, resetUser }
 })

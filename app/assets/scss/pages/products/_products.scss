@@ -16,7 +16,7 @@
       width: 100%;
 
       @include rwd-max(768px) {
-        @include grid(300px, 0px, 0px);
+        @include grid(300px, 20px, 0px);
       }
 
       .search-item {
@@ -65,7 +65,7 @@
     }
 
     @include rwd-max(1366px) {
-      @include glass($white-15);
+      @include glass($purple-700);
       display: none;
       position: fixed;
       top: 90px;
@@ -77,6 +77,7 @@
     @include rwd-max(768px) {
       @include glass($purple-900);
       top: 82px;
+      height: calc(100vh - 80px);
     }
   }
 
@@ -159,8 +160,12 @@
     padding: 20px 0;
 
     .products-list {
-      @include grid(340px, 30px, 30px);
+      @include grid(250px, 20px, 20px, 0.25fr);
       width: 100%;
+
+      @include rwd-max(1366px) {
+        @include grid(250px, 20px, 20px, 1fr);
+      }
 
       article {
         position: relative;
@@ -197,11 +202,20 @@
         }
 
         .name-main {
+          display: block;
+          width: 100%;
           font-size: $n;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
         }
 
         .name-sub {
           font-size: $s;
+        }
+
+        .category {
+          align-self: flex-end;
         }
       }
 

@@ -16,6 +16,23 @@
   letter-spacing: 1px;
 }
 
+.n-form-item-label__text {
+  font-size: $d;
+  color: $gray-400;
+}
+
+/* 必填星號 */
+.n-form-item-label__asterisk {
+  color: $white !important;
+  text-shadow: 0 0 4px $pink-700, 0 0 4px $pink-700, 0 0 4px $pink-300;
+}
+
+/* 錯誤訊息 */
+.n-form-item-feedback__line {
+  color: $white !important;
+  text-shadow: 0 0 4px $pink-700, 0 0 4px $pink-700, 0 0 4px $pink-300;
+}
+
 .n-input-number {
   .n-base-icon svg line,
   .n-base-icon svg path {

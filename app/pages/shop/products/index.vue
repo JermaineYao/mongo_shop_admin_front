@@ -6,12 +6,12 @@ import gsap from 'gsap'
 <script setup>
 definePageMeta({
   layout: 'shop-layout',
-  pageTransition: { name: 'fade', mode: 'out-in', appear: true },
   requireLogin: false
 })
 
-const { $http } = useNuxtApp()
+// const { $http } = useNuxtApp()
 const route = useRoute()
+const router = useRouter()
 
 // 查詢條件
 const searchCondition = reactive({
@@ -27,15 +27,41 @@ const searchCondition = reactive({
   limit: 12
 })
 
-const {
-  data: resData,
-  pending,
-  error,
-  refresh
-} = await useAsyncData(
+const config = useRuntimeConfig()
+const baseUrl = config.public.apiBase
+// 是否預設請求
+const isDefaultQuery = ref(true)
+
+const { data: resData, refresh } = await useAsyncData(
   () => `products-${route.query.page}`,
-  () => {
+  async () => {
+    const hasQuery = Object.entries(route.query).length === 0 ? false : true
+    const $rf = useRequestFetch()
+
     const query = {}
+
+    const urlQuery = route.query
+
+    if (isDefaultQuery.value && hasQuery) {
+      for (const k in urlQuery) {
+        if (k !== 'price[gte]' && k !== 'price[lte]') {
+          searchCondition[k] = urlQuery[k]
+
+          if (k === 'currentPage' || k === 'limit') {
+            searchCondition[k] = urlQuery[k] * 1
+          }
+        }
+
+        if (k === 'price[gte]') {
+          searchCondition.price.gte = urlQuery[k] * 1
+        }
+
+        if (k === 'price[lte]') {
+          searchCondition.price.lte = urlQuery[k] * 1
+        }
+      }
+    }
+
     for (const k in searchCondition) query[k] = searchCondition[k]
 
     for (const k in query.price) {
@@ -51,13 +77,37 @@ const {
       }
     }
 
-    return $http.get('/product/all', query)
+    const res = $rf(`${baseUrl}/product/all`, {
+      method: 'GET',
+      query
+    })
+
+    if (isDefaultQuery.value) isDefaultQuery.value = false
+
+    const flatQuery = { ...query }
+    if (flatQuery.price) {
+      if (flatQuery.price.gte != null) flatQuery['price[gte]'] = String(flatQuery.price.gte)
+      if (flatQuery.price.lte != null) flatQuery['price[lte]'] = String(flatQuery.price.lte)
+      delete flatQuery.price
+    }
+
+    router.replace({ path: route.path, query: flatQuery })
+
+    return res
   }
 )
 
-function queryByUser() {
+function queryByUser(setSearchCondition = false) {
   const sw = document.querySelector('.scroll_wrap')
   sw.scrollTop = 0
+
+  if (setSearchCondition) {
+    const w = window.innerWidth
+
+    if (w <= 1366) {
+      closeSearch()
+    }
+  }
 
   refresh()
 }
@@ -67,11 +117,12 @@ console.log('products', products)
 // const dataCount = computed(() => resData.value?.dataCount ?? 0)
 const totalPages = computed(() => resData.value?.totalPages ?? 0)
 
+// 用戶
 const userStore = useUserStore()
-const { user, login } = storeToRefs(userStore)
+const { user, isUserLogin } = storeToRefs(userStore)
 
 watch(
-  () => login.value,
+  () => isUserLogin.value,
   () => {
     refresh()
   }
@@ -111,6 +162,19 @@ const categoryList = [
   }
 ]
 
+function getCategory(v) {
+  switch (v) {
+    case '0':
+      return '碗'
+
+    case '1':
+      return '瓶子'
+
+    case '2':
+      return '杯子'
+  }
+}
+
 // 排序
 const sortOptions = [
   {
@@ -145,10 +209,7 @@ function openSearch() {
         left: 0,
         display: 'flex',
         opacity: 1,
-        duration: 0.3,
-        onComplete: function () {
-          gsap.to('.close', { opacity: 1, delay: 0.4, duration: 0.2, display: 'flex' })
-        }
+        duration: 0.3
       })
     }
   })
@@ -265,7 +326,7 @@ function closeSearch() {
             <span>取消</span>
           </div>
 
-          <div class="btn query" @click="queryByUser">
+          <div class="btn query" @click="queryByUser(true)">
             <span>查詢</span>
           </div>
         </div>
@@ -278,6 +339,8 @@ function closeSearch() {
               <div class="names">
                 <span class="name-main">{{ p.productNameMain }}</span>
                 <span class="name-sub">{{ p.productNameSub }}</span>
+
+                <span class="category">{{ getCategory(p.category) }}</span>
               </div>
 
               <div
@@ -289,7 +352,7 @@ function closeSearch() {
 
               <div class="price_wrap">
                 <span class="price">{{ formatCurrency(p.price) }}</span>
-                <span class="price-unit">NTD</span>
+                <span class="price-unit">NTD / 件</span>
               </div>
             </div>
 
