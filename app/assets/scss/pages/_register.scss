@@ -1,0 +1,45 @@
+@use '@/assets/scss/variables' as *;
+@use '@/assets/scss/mixins' as *;
+
+.page.register {
+  @include fcc;
+
+  .register_container {
+    @include flex(column, nowrap, center, flex-start, 50px);
+    padding-top: 30px;
+
+    .n-form {
+      @include flex(column, nowrap, stretch, flex-start, 20px);
+      width: 400px;
+
+      @include rwd-max(768px) {
+        width: 330px;
+      }
+    }
+
+    .action_wrap {
+      @include fcc;
+      gap: 20px;
+
+      .btn {
+        width: 120px;
+      }
+
+      .register-err {
+        color: $white !important;
+        text-shadow: 0 0 4px $pink-700, 0 0 4px $pink-700, 0 0 4px $pink-300;
+      }
+    }
+
+    .forgot {
+      color: $gray-400;
+      letter-spacing: 1px;
+      transition: all 500ms ease;
+      cursor: pointer;
+
+      &:hover {
+        color: $white;
+      }
+    }
+  }
+}

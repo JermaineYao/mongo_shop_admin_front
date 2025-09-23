@@ -3,9 +3,23 @@ export const useUserApi = () => {
 
   // 登入
   function signInApi(query) {
-    console.log('query', query)
     return $http.post('/user/sign_in', query)
   }
 
-  return { signInApi }
+  // 登出
+  function signOutApi() {
+    return $http.get('/user/sign_out')
+  }
+
+  // 註冊前檢查帳號 信箱是否已被使用
+  function checkAccountEmailApi(query) {
+    return $http.post('/user/check_user', query)
+  }
+
+  // 註冊
+  function resgisterApi(query) {
+    return $http.post('/user/sign_up', query)
+  }
+
+  return { signInApi, signOutApi, checkAccountEmailApi, resgisterApi }
 }

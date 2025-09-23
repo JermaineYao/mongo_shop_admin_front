@@ -6,7 +6,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
   const userStore = useUserStore()
   const { user, isUserLogin } = storeToRefs(userStore)
 
-  const result = await $http
+  await $http
     .get('/user/is_login')
     .then((res) => {
       if (res.status === 'success') {
@@ -23,6 +23,4 @@ export default defineNuxtRouteMiddleware(async (to) => {
       }
     })
     .catch((err) => {})
-
-  console.log('result', result)
 })

@@ -5,11 +5,6 @@ import ShopNav from '@/components/shopLayout/ShopNav.vue'
 
 <script setup>
 const themeOverrides = {
-  // FormItem: {
-  //   // 移除外框 (讓錯誤狀態不套用紅色邊框)
-  //   feedbackTextColorError: '#ff7b7b', // 自訂錯誤訊息顏色
-  //   labelTextColor: '#dac9a6' // label 顏色
-  // },
   Input: {
     // 背景
     color: 'transparent',
@@ -19,7 +14,7 @@ const themeOverrides = {
     // 文字 / 游標 / placeholder
     textColor: 'rgba(255, 255, 255, 1)',
     caretColor: 'rgba(255, 255, 255, 1)',
-    placeholderColor: 'rgb(138, 138, 138)',
+    placeholderColor: 'rgba(255, 255, 255, 0.4)',
 
     // 邊框 / 狀態
     border: '0px solid rgb(224, 224, 230)',
@@ -46,7 +41,7 @@ const themeOverrides = {
         color: 'transparent',
         colorActive: 'rgba(255, 255, 255, 0.2)', // focus 背景
         textColor: ' rgba(255, 255, 255, 1)',
-        placeholderColor: 'rgb(138, 138, 138)',
+        placeholderColor: 'rgba(255, 255, 255, 0.4)',
 
         border: '0px solid rgb(224, 224, 230)',
         borderActive: '0px solid rgb(224, 224, 230, 0)',
@@ -87,12 +82,6 @@ const themeOverrides = {
     buttonColor: 'transparent',
     buttonIconColor: '#fff'
   }
-
-  // Input: {
-  //   borderFocus: '1px solid #dac9a6', // 聚焦時的邊框 (非錯誤狀態)
-  //   borderHover: '1px solid #dac9a6',
-  //   borderError: '1px solid transparent' // 錯誤時隱藏紅框
-  // }
 }
 </script>
 

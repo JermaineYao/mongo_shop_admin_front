@@ -1,7 +1,6 @@
 <script setup>
 // 目前路由
 const route = useRoute()
-console.log(route)
 
 const userStore = useUserStore()
 const { user, isUserLogin } = storeToRefs(userStore)
@@ -10,10 +9,10 @@ const { resetUser } = userStore
 const productStore = useProductStore()
 const { productPath } = storeToRefs(productStore)
 
-const { $http } = useNuxtApp()
+const { signOutApi } = useUserApi()
 
 function logout() {
-  $http.get('/user/sign_out').then((res) => {
+  signOutApi().then((res) => {
     if (res.status === 'success') {
       resetUser()
     }

@@ -109,8 +109,8 @@ function signIn() {
           <span>登入</span>
         </div>
 
-        <div class="btn btn-login">
-          <span>註冊</span>
+        <div class="btn btn-login" @click="navigateTo('/shop/register')">
+          <span>沒有帳號 ?</span>
         </div>
       </div>
 

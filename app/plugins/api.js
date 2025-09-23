@@ -44,7 +44,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 
       throw createError({
         statusCode: response?.status || 500,
-        messag:
+        message:
           response?._data?.msg ||
           response?._data?.message ||
           response?.statusText ||
