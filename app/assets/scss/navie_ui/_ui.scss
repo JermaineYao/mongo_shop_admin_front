@@ -76,3 +76,17 @@
   margin: 0 10px;
   font-size: $n;
 }
+
+.n-switch {
+  @include glass($purple-50, 25px);
+
+  --n-box-shadow-focus: 0 0 0 0 $transparent !important;
+
+  &.n-switch.n-switch--active .n-switch__rail {
+    @include glass($white-60);
+  }
+
+  .n-switch__button {
+    background-color: $purple-900 !important;
+  }
+}

@@ -13,6 +13,10 @@
 @forward './pages/products/products';
 @forward './pages/login';
 @forward './pages/register';
+@forward './pages/forgot';
+@forward './pages/setPwd';
+
+@forward './pages/user';
 
 // components
 @forward './components/logo';

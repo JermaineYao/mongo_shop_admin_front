@@ -20,7 +20,7 @@
     display: none;
   }
 
-  @include rwd-max(768px) {
+  @include rwd-max(1024px) {
     padding: 15px 10px 15px 20px;
 
     .logo-mobile {

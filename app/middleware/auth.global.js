@@ -6,21 +6,27 @@ export default defineNuxtRouteMiddleware(async (to) => {
   const userStore = useUserStore()
   const { user, isUserLogin } = storeToRefs(userStore)
 
-  await $http
-    .get('/user/is_login')
-    .then((res) => {
-      if (res.status === 'success') {
-        const data = res.data
+  if (to.meta.requireLoginCheck) {
+    await $http
+      .get('/user/is_login')
+      .then((res) => {
+        if (res.status === 'success') {
+          const data = res.data
 
-        if (data.createAt) data.createAt = twTime(res.data.createAt)
-        if (data.modifiedAt) data.modifiedAt = twTime(res.data.modifiedAt)
+          if (data.createAt) data.createAt = twTime(res.data.createAt)
+          if (data.modifiedAt) data.modifiedAt = twTime(res.data.modifiedAt)
 
-        for (const k in user.value) {
-          user.value[k] = data[k]
+          for (const k in user.value) {
+            user.value[k] = data[k]
+          }
+
+          isUserLogin.value = true
         }
-
-        isUserLogin.value = true
-      }
-    })
-    .catch((err) => {})
+      })
+      .catch((err) => {
+        if (err && to.meta.requireLogin) {
+          return navigateTo(-1)
+        }
+      })
+  }
 })

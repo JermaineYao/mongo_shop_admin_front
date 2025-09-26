@@ -4,8 +4,7 @@ import { NForm, NFormItem, NInput } from 'naive-ui'
 
 <script setup>
 definePageMeta({
-  layout: 'shop-layout',
-  requireLogin: false
+  layout: 'shop-layout'
 })
 
 const productStore = useProductStore()
@@ -21,13 +20,11 @@ const rules = {
   pwd: [{ required: true, message: '請輸入密碼', trigger: 'blur' }]
 }
 
-// 專門存「伺服器回來」的錯誤（顯示在欄位下方）
 const serverErrors = reactive({
   account: '',
   pwd: ''
 })
 
-// 任何輸入就清掉該欄位的伺服器錯誤
 function clearServerError() {
   serverErrors.account = ''
   serverErrors.pwd = ''
@@ -114,7 +111,7 @@ function signIn() {
         </div>
       </div>
 
-      <span class="forgot">忘記密碼?</span>
+      <span class="forgot" @click="navigateTo('/shop/forgot/email')">忘記密碼 ?</span>
     </main>
   </div>
 </template>

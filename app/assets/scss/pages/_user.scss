@@ -1,0 +1,226 @@
+@use '@/assets/scss/variables' as *;
+@use '@/assets/scss/mixins' as *;
+
+.page.user {
+  @include fcc;
+  padding-bottom: 0px;
+
+  .user_container {
+    @include flex(column, nowrap, center, flex-start, 20px);
+    position: relative;
+    padding: 30px 0 40px 0;
+    width: 100vw;
+    height: 100%;
+
+    span {
+      letter-spacing: 1px;
+      color: $gray-400;
+
+      &.caption {
+        color: $white;
+      }
+    }
+
+    .icon {
+      path {
+        fill: $gray-400;
+        stroke: $gray-400 !important;
+        transition: all 500ms ease;
+      }
+
+      circle {
+        fill: $gray-400;
+        stroke: $gray-400 !important;
+        transition: all 500ms ease;
+      }
+
+      &.filled {
+        path {
+          fill: $gray-400;
+          transition: all 500ms ease;
+        }
+
+        circle {
+          fill: $gray-400;
+          stroke: $gray-400 !important;
+          transition: all 500ms ease;
+        }
+      }
+
+      &:hover {
+        path {
+          stroke: $white !important;
+        }
+
+        circle {
+          stroke: $white !important;
+        }
+
+        &.filled {
+          path {
+            fill: $white !important;
+          }
+
+          circle {
+            fill: $white;
+            stroke: $white !important;
+          }
+        }
+      }
+    }
+
+    .user-bg {
+      background: linear-gradient(200deg, rgba($bg-g1, 0.65) 0%, rgba($bg-g2, 0.9) 100%);
+      backdrop-filter: blur(18px);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100%;
+    }
+
+    .user-item {
+      @include glass($purple-50, 25px);
+      padding: 30px 20px;
+      width: 800px;
+
+      @include rwd-max(768px) {
+        width: 100vw;
+      }
+    }
+
+    .user-main {
+      @include fcc;
+      gap: 30px;
+
+      .user-img_container {
+        position: relative;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+
+        #user-photo-upload {
+          display: none;
+        }
+
+        .user-img {
+          width: 200px;
+          height: 200px;
+          border-radius: 50%;
+          cursor: pointer;
+        }
+
+        .user-img-empty {
+          cursor: pointer;
+
+          path {
+            fill: $gray-400;
+            transition: all 500ms ease;
+          }
+
+          &:hover {
+            path {
+              fill: $white;
+            }
+          }
+        }
+
+        .img-remove {
+          @include fcc;
+          position: absolute;
+          top: -15px;
+          right: -30px;
+          width: 60px;
+          height: 60px;
+          cursor: pointer;
+
+          svg path {
+            fill: $purple-900;
+            transition: all 500ms ease;
+          }
+
+          &:hover {
+            svg path {
+              fill: $gray-400;
+            }
+          }
+        }
+      }
+
+      .user-main-info {
+        @include flex(column, nowrap, flex-end, flex-start);
+
+        .account {
+          font-size: $l;
+        }
+
+        .email {
+          font-size: $n;
+        }
+      }
+    }
+
+    .user-active {
+      @include frc;
+      gap: 20px;
+
+      .not-active,
+      .is-active {
+        color: $white;
+      }
+
+      .is-active {
+        text-shadow: 0 0 4px $sky-300, 0 0 4px $sky-300, 0 0 4px $sky-300;
+      }
+
+      .not-active {
+        text-shadow: 0 0 4px $pink-700, 0 0 4px $pink-700, 0 0 4px $pink-300;
+      }
+    }
+
+    .user-contact,
+    .user-pwd {
+      @include flex(column, nowrap, stretch, flex-start, 10px);
+
+      .action_wrap {
+        @include flex(row, nowrap, center, flex-end, 30px);
+
+        .query-res {
+          margin-right: auto;
+          font-size: $s;
+          color: $white;
+          opacity: 0;
+          transition: all 500ms ease;
+
+          &.success {
+            opacity: 1;
+            text-shadow: 0 0 4px $sky-300, 0 0 4px $sky-300, 0 0 4px $sky-300;
+          }
+
+          &.failed {
+            opacity: 1;
+            text-shadow: 0 0 4px $pink-700, 0 0 4px $pink-700, 0 0 4px $pink-300;
+          }
+        }
+      }
+
+      .contact-content,
+      .pwd-content {
+        @include flex(column, nowrap, stretch, flex-start, 20px);
+      }
+
+      .contact-item,
+      .pwd-item {
+        @include flex(column, nowrap, flex-start, flex-start, 5px);
+
+        .caption {
+          font-size: $s;
+        }
+
+        .n-form-item {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

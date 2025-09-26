@@ -21,5 +21,58 @@ export const useUserApi = () => {
     return $http.post('/user/sign_up', query)
   }
 
-  return { signInApi, signOutApi, checkAccountEmailApi, resgisterApi }
+  // 忘記密碼(發送密碼設定連結至用戶信箱)
+  function forgotPwdApi(query) {
+    return $http.post('/user/forgot_pwd', query)
+  }
+
+  // 忘記密碼 - 設定新密碼
+  function resetPwdApi(query) {
+    return $http.post('/user/reset_pwd', query)
+  }
+
+  // 我的帳號
+  function queryMyAccountApi() {
+    return $http.get('/user/my_account')
+  }
+
+  // 上傳我的圖片
+  function uploadMyPhotoApi(formData) {
+    return $http.postFile('/user/upload_user_photo', formData)
+  }
+
+  // 刪除我的圖片
+  function deleteMyPhotoApi() {
+    return $http.delete('/user/delete_my_photo')
+  }
+
+  // 停用,啟用 帳號
+  function toggleAccountEnabledApi(query) {
+    return $http.patch('/user/my_account_enable', query)
+  }
+
+  // 更新 地址, 電話
+  function updateContactApi(query) {
+    return $http.patch('/user/update_my_contact', query)
+  }
+
+  // 修改密碼
+  function updatePwdApi(query) {
+    return $http.patch('/user/update_pwd', query)
+  }
+
+  return {
+    signInApi,
+    signOutApi,
+    checkAccountEmailApi,
+    resgisterApi,
+    forgotPwdApi,
+    resetPwdApi,
+    queryMyAccountApi,
+    uploadMyPhotoApi,
+    deleteMyPhotoApi,
+    toggleAccountEnabledApi,
+    updateContactApi,
+    updatePwdApi
+  }
 }

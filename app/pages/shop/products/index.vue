@@ -6,6 +6,7 @@ import gsap from 'gsap'
 <script setup>
 definePageMeta({
   layout: 'shop-layout',
+  requireLoginCheck: true,
   requireLogin: false
 })
 
