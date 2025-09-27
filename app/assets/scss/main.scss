@@ -19,6 +19,7 @@
 @forward './pages/setPwd';
 
 @forward './pages/user';
+@forward './pages/favorite';
 
 // components
 @forward './components/icon';
@@ -33,3 +34,5 @@
 @forward './components/landingPage/team';
 
 @forward './components/shopLayout/nav';
+
+@forward './components/product_item';

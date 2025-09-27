@@ -6,25 +6,25 @@ svg.icon {
   transition: all 500ms ease;
 
   path {
-    stroke: $white !important;
+    stroke: $gray-400 !important;
     transition: all 500ms ease;
   }
 
   circle {
-    fill: $white;
-    stroke: $white !important;
+    fill: $gray-400;
+    stroke: $gray-400 !important;
     transition: all 500ms ease;
   }
 
   &.filled {
     path {
-      fill: $white;
+      fill: $gray-400;
       transition: all 500ms ease;
     }
 
     circle {
-      fill: $white;
-      stroke: $white !important;
+      fill: $gray-400;
+      stroke: $gray-400 !important;
       transition: all 500ms ease;
     }
   }
@@ -58,7 +58,8 @@ svg.icon {
 
   &.icon-cart-remove,
   &.favorite,
-  &.favorite-empty {
+  &.favorite-empty,
+  &.pink {
     &:hover {
       filter: drop-shadow(0 0 3px $pink-700) drop-shadow(0 0 3px $pink-300);
     }

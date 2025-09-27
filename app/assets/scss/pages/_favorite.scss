@@ -1,0 +1,44 @@
+@use '@/assets/scss/variables' as *;
+@use '@/assets/scss/mixins' as *;
+
+.page.favorite {
+  @include fcc;
+  padding-bottom: 0px;
+
+  .favorite_container {
+    @include flex(column, nowrap, center, flex-start, 20px);
+    position: relative;
+    padding: 30px 0 40px 0;
+    width: 100vw;
+    height: 100%;
+
+    .favorite-item {
+      @include flex(row, nowrap, stretch, space-between);
+      @include glass($purple-50, 25px);
+      padding: 20px;
+      width: 800px;
+
+      @include rwd-max(768px) {
+        @include flex(column, nowrap, flex-star, flex-start);
+        width: 100vw;
+      }
+    }
+
+    .user-operation {
+      @include flex(row, nowrap, flex-start, flex-end);
+      gap: 10px;
+    }
+
+    .res-msg {
+      color: $white;
+
+      &.success {
+        text-shadow: 0 0 4px $sky-300, 0 0 4px $sky-300, 0 0 4px $sky-300;
+      }
+
+      &.failed {
+        text-shadow: 0 0 4px $pink-700, 0 0 4px $pink-700, 0 0 4px $pink-300;
+      }
+    }
+  }
+}

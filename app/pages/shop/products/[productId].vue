@@ -1,7 +1,6 @@
 <script>
-import { NInput, NInputNumber, NSelect, NPagination } from 'naive-ui'
+import { NInputNumber } from 'naive-ui'
 import gsap from 'gsap'
-import Favorite from '~/components/icon/Favorite.vue'
 </script>
 
 <script setup>
@@ -30,10 +29,8 @@ const { data: product, refresh } = await useAsyncData(
   }
 )
 
-console.log('product', product)
-
 const userStore = useUserStore()
-const { user, isUserLogin } = storeToRefs(userStore)
+const { isUserLogin } = storeToRefs(userStore)
 const { updateCartApi, toggleFavoriteApi } = useUserApi()
 
 // 檢視圖片
@@ -80,7 +77,7 @@ function updateCart() {
     })
     .catch((err) => {
       if (err) {
-        reqMsg.cart = '購物車更新失敗, 請稍後再試'
+        reqMsg.cart = '請稍後再試'
         reqResult.cart = false
 
         setTimeout(() => {
@@ -112,7 +109,7 @@ function toggleFavorite() {
     })
     .catch((err) => {
       if (err) {
-        reqMsg.favorite = '購物車更新失敗, 請稍後再試'
+        reqMsg.favorite = '請稍後再試'
         reqResult.favorite = false
 
         setTimeout(() => {

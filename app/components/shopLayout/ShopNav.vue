@@ -38,7 +38,7 @@ function toLogin() {
         class="icon_wrap"
         @click="navigateTo('/shop/products')"
       >
-        <IconShop />
+        <IconShop width="33px" />
       </div>
 
       <div v-if="route.name !== 'shop-products'" class="line-verticle"></div>
@@ -62,7 +62,11 @@ function toLogin() {
 
       <div v-if="route.name !== 'shop-user'" class="line-verticle"></div>
 
-      <div v-if="isUserLogin" class="icon_wrap" @click="navigateTo('/favorite')">
+      <div
+        v-if="isUserLogin && route.name !== 'shop-user-favorite'"
+        class="icon_wrap"
+        @click="navigateTo('/shop/user/favorite')"
+      >
         <IconFavorite />
       </div>
 

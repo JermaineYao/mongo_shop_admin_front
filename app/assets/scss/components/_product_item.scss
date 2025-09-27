@@ -1,0 +1,56 @@
+@use '@/assets/scss/variables' as *;
+@use '@/assets/scss/mixins' as *;
+
+.product-item_container {
+  @include flex(row, nowrap, stretch, flex-start, 20px);
+
+  span {
+    letter-spacing: 1px;
+    color: $gray-400;
+  }
+
+  .product-image {
+    width: 120px;
+    height: 120px;
+  }
+
+  .product-main {
+    @include flex(column, nowrap, flex-start, flex-start, 5px);
+
+    .price_wrap {
+      @include flex(row, nowrap, center, flex-start, 10px);
+      margin-top: auto;
+    }
+
+    .price {
+      font-size: $m;
+      color: $gold-500;
+    }
+
+    .names {
+      @include flex(column, nowrap, flex-start, flex-start, 5px);
+
+      .name-main,
+      .name-sub {
+        display: block;
+        color: $white;
+        width: 100%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
+      .name-main {
+        font-size: $n;
+      }
+
+      .name-sub {
+        font-size: $xs;
+      }
+    }
+
+    .category {
+      font-size: $s;
+    }
+  }
+}

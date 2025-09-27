@@ -76,6 +76,11 @@ export const useUserApi = () => {
     return $http.post('/favorite/toggle', query)
   }
 
+  // 查詢我的最愛
+  function queryMyFavoriteApi() {
+    return $http.get('/favorite/find')
+  }
+
   return {
     signInApi,
     signOutApi,
@@ -91,6 +96,7 @@ export const useUserApi = () => {
     updatePwdApi,
     updateCartApi,
     deleteFromCartApi,
-    toggleFavoriteApi
+    toggleFavoriteApi,
+    queryMyFavoriteApi
   }
 }
