@@ -61,6 +61,21 @@ export const useUserApi = () => {
     return $http.patch('/user/update_pwd', query)
   }
 
+  // 加入, 修改購物車
+  function updateCartApi(query) {
+    return $http.post('/cart/update', query)
+  }
+
+  // 商品從購物車中移除
+  function deleteFromCartApi(query) {
+    return $http.post('/cart/delete', query)
+  }
+
+  // 新增,移除 我的最愛
+  function toggleFavoriteApi(query) {
+    return $http.post('/favorite/toggle', query)
+  }
+
   return {
     signInApi,
     signOutApi,
@@ -73,6 +88,9 @@ export const useUserApi = () => {
     deleteMyPhotoApi,
     toggleAccountEnabledApi,
     updateContactApi,
-    updatePwdApi
+    updatePwdApi,
+    updateCartApi,
+    deleteFromCartApi,
+    toggleFavoriteApi
   }
 }

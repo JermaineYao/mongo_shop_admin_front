@@ -1,14 +1,21 @@
+<script setup>
+const props = defineProps({
+  width: { type: String, default: '36px' },
+  height: { type: String, default: '36px' }
+})
+</script>
+
 <template>
   <svg
-    class="icon filled"
+    class="icon filled shop"
     xmlns="http://www.w3.org/2000/svg"
     xmlns:xlink="http://www.w3.org/1999/xlink"
-    viewBox="0 0 20 20 "
-    width="36"
-    height="36"
+    viewBox="0 0 32 32"
+    :width="props.width"
+    :height="props.height"
   >
     <path
-      d="M18.36 9l.6 3H5.04l.6-3h12.72M20 4H4v2h16V4zm0 3H4l-1 5v2h1v6h10v-6h4v6h2v-6h1v-2l-1-5zM6 18v-4h6v4H6z"
+      d="M30 10.68l-2-6A1 1 0 0 0 27 4H5a1 1 0 0 0-1 .68l-2 6A1.19 1.19 0 0 0 2 11v6a1 1 0 0 0 1 1h1v10h2V18h6v10h16V18h1a1 1 0 0 0 1-1v-6a1.19 1.19 0 0 0 0-.32zM26 26H14v-8h12zm2-10h-4v-4h-2v4h-5v-4h-2v4h-5v-4H8v4H4v-4.84L5.72 6h20.56L28 11.16z"
     />
   </svg>
 </template>

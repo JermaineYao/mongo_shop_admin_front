@@ -1,0 +1,66 @@
+@use '@/assets/scss/variables' as *;
+@use '@/assets/scss/mixins' as *;
+
+svg.icon {
+  cursor: pointer;
+  transition: all 500ms ease;
+
+  path {
+    stroke: $white !important;
+    transition: all 500ms ease;
+  }
+
+  circle {
+    fill: $white;
+    stroke: $white !important;
+    transition: all 500ms ease;
+  }
+
+  &.filled {
+    path {
+      fill: $white;
+      transition: all 500ms ease;
+    }
+
+    circle {
+      fill: $white;
+      stroke: $white !important;
+      transition: all 500ms ease;
+    }
+  }
+
+  &:hover {
+    path {
+      stroke: $white !important;
+    }
+
+    circle {
+      stroke: $white !important;
+    }
+
+    &.filled {
+      path {
+        fill: $white !important;
+      }
+
+      circle {
+        fill: $white;
+        stroke: $white !important;
+      }
+    }
+  }
+
+  &.icon-cart-add {
+    &:hover {
+      filter: drop-shadow(0 0 3px $sky-300) drop-shadow(0 0 3px $sky-300);
+    }
+  }
+
+  &.icon-cart-remove,
+  &.favorite,
+  &.favorite-empty {
+    &:hover {
+      filter: drop-shadow(0 0 3px $pink-700) drop-shadow(0 0 3px $pink-300);
+    }
+  }
+}

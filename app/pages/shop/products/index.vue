@@ -78,7 +78,7 @@ const { data: resData, refresh } = await useAsyncData(
       }
     }
 
-    const res = $rf(`${baseUrl}/product/all`, {
+    const res = await $rf(`${baseUrl}/product/all`, {
       method: 'GET',
       query
     })
@@ -162,19 +162,6 @@ const categoryList = [
     value: '2'
   }
 ]
-
-function getCategory(v) {
-  switch (v) {
-    case '0':
-      return '碗'
-
-    case '1':
-      return '瓶子'
-
-    case '2':
-      return '杯子'
-  }
-}
 
 // 排序
 const sortOptions = [
@@ -292,7 +279,6 @@ function closeSearch() {
             <n-input-number
               v-model:value="searchCondition.price.lte"
               size="large"
-              type="number"
               placeholder=""
               clearable
               @blur="checkPrice('lte')"
@@ -337,19 +323,19 @@ function closeSearch() {
         <div v-if="products && products.length > 0" class="products-list">
           <article v-for="p in products" :key="p._id">
             <div class="product_wrap">
-              <div class="names">
+              <div class="names" @click="navigateTo(`/shop/products/${p._id}`)">
                 <span class="name-main">{{ p.productNameMain }}</span>
                 <span class="name-sub">{{ p.productNameSub }}</span>
 
                 <span class="category">{{ getCategory(p.category) }}</span>
-              </div>
 
-              <div
-                class="product-image"
-                :style="{
-                  background: `url(${p.mainPhoto.url}) center/cover no-repeat`
-                }"
-              ></div>
+                <div
+                  class="product-image"
+                  :style="{
+                    background: `url(${p.mainPhoto.url}) center/cover no-repeat`
+                  }"
+                ></div>
+              </div>
 
               <div class="price_wrap">
                 <span class="price">{{ formatCurrency(p.price) }}</span>

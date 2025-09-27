@@ -11,6 +11,8 @@
 @forward './pages/landing_page';
 
 @forward './pages/products/products';
+@forward './pages/products/productDetail/product_detail';
+
 @forward './pages/login';
 @forward './pages/register';
 @forward './pages/forgot';
@@ -19,6 +21,8 @@
 @forward './pages/user';
 
 // components
+@forward './components/icon';
+
 @forward './components/logo';
 @forward './components/footer';
 

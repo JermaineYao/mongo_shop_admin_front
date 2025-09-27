@@ -53,56 +53,6 @@ h1 {
   transform: translateY(100px);
 }
 
-svg.icon {
-  cursor: pointer;
-  transition: all 500ms ease;
-
-  path {
-    stroke: $white !important;
-    transition: all 500ms ease;
-  }
-
-  circle {
-    fill: $white;
-    stroke: $white !important;
-    transition: all 500ms ease;
-  }
-
-  &.filled {
-    path {
-      fill: $white;
-      transition: all 500ms ease;
-    }
-
-    circle {
-      fill: $white;
-      stroke: $white !important;
-      transition: all 500ms ease;
-    }
-  }
-
-  &:hover {
-    path {
-      stroke: $white !important;
-    }
-
-    circle {
-      stroke: $white !important;
-    }
-
-    &.filled {
-      path {
-        fill: $white !important;
-      }
-
-      circle {
-        fill: $white;
-        stroke: $white !important;
-      }
-    }
-  }
-}
-
 .btn {
   @include no-select();
   @include frc;

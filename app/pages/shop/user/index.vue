@@ -375,7 +375,7 @@ function updatePwd() {
         background: `url(${user.photo.url}) center/cover no-repeat`
       }"
     >
-      <div v-if="user.photo.url" class="user-bg"></div>
+      <div v-if="user.photo.url" class="page-bg"></div>
 
       <section class="user-main user-item">
         <article class="user-img_container">

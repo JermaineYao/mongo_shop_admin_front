@@ -40,7 +40,7 @@
 
   .actions_container {
     @include frl;
-    gap: 15px;
+    gap: 8px;
 
     // @include rwd-max(768px) {
     //   gap: 8px;

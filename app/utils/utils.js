@@ -58,3 +58,17 @@ export function twTime(dateString, options) {
     ...options
   })
 }
+
+// 商品分類
+export function getCategory(v) {
+  switch (v) {
+    case '0':
+      return '碗'
+
+    case '1':
+      return '瓶子'
+
+    case '2':
+      return '杯子'
+  }
+}

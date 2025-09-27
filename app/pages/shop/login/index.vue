@@ -12,7 +12,7 @@ const { productPath } = storeToRefs(productStore)
 
 const user = reactive({
   account: 'sayoko',
-  pwd: '@1A2b3c4d'
+  pwd: '@Test1234'
 })
 
 const rules = {

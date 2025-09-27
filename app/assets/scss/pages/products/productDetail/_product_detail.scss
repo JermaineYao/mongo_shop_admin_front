@@ -1,0 +1,219 @@
+@use '@/assets/scss/variables' as *;
+@use '@/assets/scss/mixins' as *;
+
+.page.product-detail {
+  @include fcc;
+  padding-bottom: 0px;
+
+  .product-detail_container {
+    @include flex(column, nowrap, center, flex-start, 20px);
+    position: relative;
+    padding: 30px 0 40px 0;
+    width: 100vw;
+    height: 100%;
+  }
+
+  span {
+    letter-spacing: 1px;
+    color: $gray-400;
+
+    &.caption {
+      color: $white;
+    }
+  }
+
+  .page-bg {
+    background: linear-gradient(200deg, rgba($bg-g1, 0.65) 0%, rgba($bg-g2, 0.9) 100%);
+    backdrop-filter: blur(10px);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100%;
+  }
+
+  .product-item {
+    @include glass($purple-50, 25px);
+    padding: 20px;
+    width: 100vw;
+    max-width: 1440px;
+
+    @include rwd-max(1024px) {
+      padding: 20px 30px;
+    }
+
+    @include rwd-max(1024px) {
+      padding: 20px;
+    }
+  }
+
+  section.product-names {
+    @include flex(column, nowrap, stretch, flex-start);
+
+    article.names_wrap {
+      @include flex(column, nowrap, flex-start, flex-start);
+      width: 100%;
+    }
+
+    .name-main,
+    .name-sub {
+      display: block;
+      color: $white;
+      width: 100%;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .name-main {
+      font-size: $m;
+    }
+
+    .name-sub {
+      font-size: $s;
+    }
+
+    .category {
+      margin-left: auto;
+      font-size: $s;
+    }
+  }
+
+  .res-msg {
+    color: $white;
+
+    &.success {
+      text-shadow: 0 0 4px $sky-300, 0 0 4px $sky-300, 0 0 4px $sky-300;
+    }
+
+    &.failed {
+      text-shadow: 0 0 4px $pink-700, 0 0 4px $pink-700, 0 0 4px $pink-300;
+    }
+  }
+
+  section.cart-operation {
+    @include flex(column, nowrap, stretch, flex-start, 10px);
+
+    hr {
+      height: 1px;
+      width: 100%;
+      border: none;
+      background-color: $white-15;
+    }
+
+    .user-operation_wrap {
+      align-self: flex-end;
+
+      .cart_wrap {
+        @include flex(row, noqrap, flex-end, flex-start, 20px);
+
+        .order-count {
+          @include flex(row, nowrap, center, flex-start, 10px);
+
+          .quantity {
+            font-size: $d;
+            white-space: nowrap;
+          }
+
+          .n-input-number {
+            width: 180px;
+          }
+        }
+
+        .user-operation {
+          @include flex(row, noqrap, flex-end, flex-start, 10px);
+        }
+      }
+    }
+
+    .product-price {
+      @include flex(row, nowrap, center, space-between);
+
+      .price_wrap {
+        @include flex(row, nowrap, center, flex-start, 10px);
+      }
+
+      .price {
+        font-size: $m;
+        color: $gold-500;
+      }
+
+      .favorite_container {
+        @include frc;
+        gap: 10px;
+      }
+    }
+  }
+
+  section.product-main {
+    @include flex(row, nowrap, stretch, flex-start, 20px);
+    position: relative;
+
+    @include rwd-max(1024px) {
+      @include flex(column, nowrap, stretch, flex-start, 20px);
+    }
+
+    .sold-out_wrap {
+      background-color: $black-20;
+      @include fcc;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 20;
+
+      .sold-out {
+        color: $white;
+        font-size: $n;
+      }
+    }
+
+    .product-imgs {
+      @include flex(column, nowrap, stretch, flex-start);
+      flex: 1 1 0;
+      aspect-ratio: 1 / 1;
+
+      #img-display {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+      }
+    }
+
+    .product-body {
+      @include flex(column, nowrap, stretch, flex-start, 30px);
+      flex: 1 1 0;
+
+      .img-menu {
+        @include grid(120px, 10px, 10px, 0.25fr);
+
+        @include rwd-max(1024px) {
+          @include grid(150px, 10px, 10px, 0.5fr);
+        }
+
+        .img {
+          transition: all 500ms ease;
+          opacity: 0.8;
+          cursor: pointer;
+
+          &:hover {
+            opacity: 1;
+          }
+        }
+
+        .img-menu-item {
+          aspect-ratio: 1 / 1;
+        }
+      }
+
+      .product-descroption {
+        @include flex(column, nowrap, stretch, flex-start, 10px);
+
+        .description {
+          font-size: $s;
+          text-align: justify;
+        }
+      }
+    }
+  }
+}
