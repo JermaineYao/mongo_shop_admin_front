@@ -114,13 +114,11 @@ function queryByUser(setSearchCondition = false) {
 }
 
 const products = computed(() => resData.value?.data ?? [])
-console.log('products', products)
-// const dataCount = computed(() => resData.value?.dataCount ?? 0)
 const totalPages = computed(() => resData.value?.totalPages ?? 0)
 
 // 用戶
 const userStore = useUserStore()
-const { user, isUserLogin } = storeToRefs(userStore)
+const { isUserLogin } = storeToRefs(userStore)
 
 watch(
   () => isUserLogin.value,

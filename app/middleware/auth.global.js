@@ -5,6 +5,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
   const userStore = useUserStore()
   const { user, isUserLogin } = storeToRefs(userStore)
+  const { resetUser } = userStore
 
   if (to.meta.requireLoginCheck) {
     await $http
@@ -21,9 +22,15 @@ export default defineNuxtRouteMiddleware(async (to) => {
           }
 
           isUserLogin.value = true
+
+          if (to.meta.requireActive && !data.active) {
+            return navigateTo(-1)
+          }
         }
       })
       .catch((err) => {
+        resetUser()
+
         if (err && to.meta.requireLogin) {
           return navigateTo(-1)
         }

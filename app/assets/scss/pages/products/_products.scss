@@ -75,7 +75,7 @@
     }
 
     @include rwd-max(768px) {
-      @include glass($purple-900);
+      // @include glass($purple-700);
       top: 82px;
       height: calc(100vh - 80px);
     }

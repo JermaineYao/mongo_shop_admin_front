@@ -1,0 +1,155 @@
+@use '@/assets/scss/variables' as *;
+@use '@/assets/scss/mixins' as *;
+
+.page.cart {
+  @include fcc;
+  padding-bottom: 0px;
+
+  span {
+    letter-spacing: 1px;
+    color: $gray-400;
+
+    &.caption {
+      color: $white;
+    }
+  }
+
+  .cart-summary,
+  .action_wrap {
+    @include frl;
+    gap: 20px;
+  }
+
+  .empty-cart {
+    align-self: flex-end;
+  }
+
+  .cart_container {
+    @include flex(column, nowrap, center, flex-start, 30px);
+    padding: 30px 0 40px 0;
+    width: 1024px;
+    height: 100%;
+
+    @include rwd-max(1024px) {
+      width: 100vw;
+      padding: 30px 20px 40px 20px;
+    }
+
+    &.empty {
+      @include fcc;
+    }
+
+    #order-form {
+      @include flex(column, nowrap, stretch, flex-start);
+      width: 100%;
+      opacity: 0;
+      transition: all 500ms ease;
+
+      .action_wrap {
+        align-self: flex-end;
+      }
+
+      .n-form {
+        @include flex(column, nowrap, stretch, flex-start, 15px);
+      }
+    }
+
+    .cart-operation {
+      @include flex(row, nowrap, stretch, space-between);
+      width: 100%;
+
+      @include rwd-max(768px) {
+        @include flex(column, nowrap, stretch, flex-start, 20px);
+      }
+
+      .cart-summary,
+      .action_wrap {
+        @include frl;
+        gap: 20px;
+      }
+
+      .action_wrap {
+        @include rwd-max(768px) {
+          margin-left: auto;
+        }
+      }
+
+      .total-quantity_wrap,
+      .total-price_wrap {
+        @include flex(row, nowrap, center, flex-end, 10px);
+      }
+
+      .total-quantity,
+      .price {
+        font-size: $m;
+        color: $gold-500;
+      }
+    }
+
+    hr {
+      height: 1px;
+      width: 100%;
+      border: none;
+      background-color: $gray-400;
+    }
+
+    .cart-item {
+      @include glass($purple-50, 25px);
+      width: 100%;
+
+      .cart-item_container {
+        @include flex(row, nowrap, stretch, space-between);
+
+        @include rwd-max(768px) {
+          @include flex(column, nowrap, flex-star, flex-start);
+        }
+      }
+
+      hr {
+        height: 1px;
+        width: calc(100% - 40px);
+        border: none;
+        background-color: $white-15;
+      }
+
+      .price_wrap {
+        @include flex(row, nowrap, center, flex-end, 10px);
+        padding-right: 20px;
+      }
+
+      .price {
+        font-size: $m;
+        color: $gold-500;
+      }
+    }
+
+    .user-operation {
+      @include flex(column, nowrap, flex-end, space-between);
+      padding: 20px;
+
+      @include rwd-max(768px) {
+        @include flex(row-reverse, nowrap, center, space-between);
+      }
+
+      .n-input-number {
+        width: 150px;
+      }
+
+      .quantity_wrap {
+        @include flex(column, nowrap, flex-end, space-between);
+      }
+    }
+
+    .res-msg {
+      color: $white;
+
+      &.success {
+        text-shadow: 0 0 4px $sky-300, 0 0 4px $sky-300, 0 0 4px $sky-300;
+      }
+
+      &.failed {
+        text-shadow: 0 0 4px $pink-700, 0 0 4px $pink-700, 0 0 4px $pink-300;
+      }
+    }
+  }
+}

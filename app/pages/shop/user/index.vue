@@ -169,12 +169,12 @@ function updateContact() {
   const query = {}
 
   query.phoneNumber =
-    user.value.phoneNumber && user.value.phoneNumber.length > 0
+    user.value.phoneNumber && user.value.phoneNumber.trim().length > 0
       ? user.value.phoneNumber.trim()
       : null
 
   query.address =
-    user.value.address && user.value.address.length > 0 ? user.value.address.trim() : null
+    user.value.address && user.value.address.trim().length > 0 ? user.value.address.trim() : null
 
   updateContactApi(query)
     .then((res) => {

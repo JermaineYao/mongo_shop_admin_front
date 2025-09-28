@@ -1,8 +1,4 @@
-<script></script>
-
 <script setup>
-import ProductItem from '~/components/ProductItem.vue'
-
 definePageMeta({
   layout: 'shop-layout',
   requireLoginCheck: true,
@@ -90,18 +86,34 @@ function toggleFavorite(productId, index) {
 
 <template>
   <div class="page favorite">
-    <main class="favorite_container">
+    <main v-if="myFavorite.length > 0" class="favorite_container">
       <section v-for="(f, index) in myFavorite" :key="f.favoriteId" class="favorite-item">
-        <ProductItem :product="f.product" />
+        <div class="product_wrap">
+          <ProductItem
+            :product="f.product"
+            :is-sold-out="f?.product.inStock === 0 ? true : false"
+          />
+
+          <!-- <div v-if="f?.product.inStock === 0" class="sold-out_wrap">
+            <span class="sold-out">已售完</span>
+          </div> -->
+        </div>
 
         <div class="user-operation">
           <span :class="[f.reqResult ? 'res-msg success' : 'res-msg failed']">{{ f.reqMsg }}</span>
 
           <IconFavoriteRemove @click="toggleFavorite(f.product.productId, index)" />
 
-          <IconCartAdd v-if="!f.inCart" @click="updateCart(f.product.productId, index)" />
+          <IconCartAdd
+            v-if="!f.inCart && f?.product.inStock > 0"
+            @click="updateCart(f.product.productId, index)"
+          />
         </div>
       </section>
+    </main>
+
+    <main v-else class="favorite_container empty">
+      <span>我的最愛是空的</span>
     </main>
   </div>
 </template>

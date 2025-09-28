@@ -3,19 +3,45 @@
 
 .product-item_container {
   @include flex(row, nowrap, stretch, flex-start, 20px);
+  padding: 20px;
+  cursor: pointer;
 
   span {
     letter-spacing: 1px;
     color: $gray-400;
   }
 
-  .product-image {
+  .product-img_wrap {
+    position: relative;
+    flex-shrink: 0;
     width: 120px;
     height: 120px;
+
+    .product-image {
+      width: 120px;
+      height: 120px;
+    }
+
+    .sold-out_wrap {
+      background-color: $black-60;
+      @include fcc;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 120px;
+      height: 120px;
+      z-index: 20;
+
+      .sold-out {
+        color: $gray-400;
+        font-size: $n;
+      }
+    }
   }
 
   .product-main {
     @include flex(column, nowrap, flex-start, flex-start, 5px);
+    min-width: 0;
 
     .price_wrap {
       @include flex(row, nowrap, center, flex-start, 10px);
@@ -29,6 +55,7 @@
 
     .names {
       @include flex(column, nowrap, flex-start, flex-start, 5px);
+      max-width: 100%;
 
       .name-main,
       .name-sub {

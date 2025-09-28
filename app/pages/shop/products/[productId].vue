@@ -157,9 +157,9 @@ function toggleFavorite() {
           </div>
         </article>
 
-        <hr v-if="isUserLogin" />
+        <hr v-if="isUserLogin && product.inStock > 0" />
 
-        <div v-if="isUserLogin" class="user-operation_wrap">
+        <div v-if="isUserLogin && product.inStock > 0" class="user-operation_wrap">
           <div class="cart_wrap">
             <div class="order-count">
               <span :class="[reqResult.cart ? 'res-msg success' : 'res-msg failed']">{{
@@ -219,9 +219,12 @@ function toggleFavorite() {
               v-for="(description, index) in product?.description"
               :key="index"
               class="description"
-              >{{ description }}</span
             >
+              {{ description }}
+            </span>
           </div>
+
+          <pre class="size">{{ product?.size }}</pre>
         </article>
 
         <div v-if="product.inStock === 0" class="sold-out_wrap">

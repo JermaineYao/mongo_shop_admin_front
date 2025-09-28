@@ -2,8 +2,6 @@
 // 目前路由
 const route = useRoute()
 
-console.log(route.name)
-
 const userStore = useUserStore()
 const { user, isUserLogin } = storeToRefs(userStore)
 const { resetUser } = userStore
@@ -70,11 +68,19 @@ function toLogin() {
         <IconFavorite />
       </div>
 
-      <div v-if="isUserLogin" class="icon_wrap" @click="navigateTo('/cart')">
+      <div
+        v-if="isUserLogin && route.name !== 'shop-user-cart' && user.active"
+        class="icon_wrap"
+        @click="navigateTo('/shop/user/cart')"
+      >
         <IconCart />
       </div>
 
-      <div v-if="isUserLogin" class="icon_wrap" @click="navigateTo('/order')">
+      <div
+        v-if="isUserLogin && route.name !== 'shop-user-order' && user.active"
+        class="icon_wrap"
+        @click="navigateTo('/shop/user/order')"
+      >
         <IconOrder />
       </div>
 

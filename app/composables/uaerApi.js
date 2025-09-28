@@ -81,6 +81,31 @@ export const useUserApi = () => {
     return $http.get('/favorite/find')
   }
 
+  // 查詢我的購物車
+  function queryMyCartApi() {
+    return $http.get('/cart/my_cart')
+  }
+
+  // 移除購物車商品
+  function removeFromCartApi(query) {
+    return $http.post('/cart/delete', query)
+  }
+
+  // 清空購物車
+  function emptyCartApi() {
+    return $http.delete('/cart/clear')
+  }
+
+  // 下訂單
+  function createOrderApi(query) {
+    return $http.post('/order/create', query)
+  }
+
+  // 查詢所有訂單
+  function queryMyOrdersApi() {
+    return $http.get('/order/my_orders')
+  }
+
   return {
     signInApi,
     signOutApi,
@@ -97,6 +122,11 @@ export const useUserApi = () => {
     updateCartApi,
     deleteFromCartApi,
     toggleFavoriteApi,
-    queryMyFavoriteApi
+    queryMyFavoriteApi,
+    queryMyCartApi,
+    removeFromCartApi,
+    emptyCartApi,
+    createOrderApi,
+    queryMyOrdersApi
   }
 }

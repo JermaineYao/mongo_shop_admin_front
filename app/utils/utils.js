@@ -72,3 +72,20 @@ export function getCategory(v) {
       return '杯子'
   }
 }
+
+// 訂單狀態
+export function orderStatusName(orderStatus) {
+  switch (orderStatus) {
+    case 'pending':
+      return '準備中'
+
+    case 'shipping':
+      return '運送中'
+
+    case 'completed':
+      return '已完成'
+
+    case 'cancelled':
+      return '已取消'
+  }
+}
