@@ -21,7 +21,11 @@
   }
 
   .header {
-    padding: 30px 20px 0px 20px;
+    padding: 30px 20px 0px 0px;
+
+    @include rwd-max(1024px) {
+      width: 100%;
+    }
 
     span {
       font-size: $m;
@@ -46,6 +50,106 @@
       width: 60px;
       height: 60px;
       border-radius: 50%;
+    }
+
+    .order-item {
+      @include flex(column, nowrap, space-between, flex-start, 20px);
+      @include glass($purple-50, 25px);
+      width: 100%;
+      padding: 20px;
+      cursor: pointer;
+
+      .order-main {
+        @include grid(200px, 20px, 20px);
+
+        .order-no_wrap {
+          @include frl;
+          gap: 5px;
+
+          @include rwd-max(768px) {
+            @include flex(row, nowrap, center, space-between);
+          }
+
+          .order-no {
+            font-size: $m;
+            color: $gold-500;
+          }
+
+          .order-status {
+            padding: 2px 5px;
+            width: fit-content;
+            flex-shrink: 0;
+
+            span {
+              display: block;
+              font-size: $xs;
+              white-space: nowrap;
+              transform: translateY(1px) !important;
+            }
+
+            &.cancelled {
+              background-color: $black;
+
+              span {
+                color: $gray-500;
+                font-weight: 700;
+              }
+            }
+
+            &.pending {
+              background-color: $pink-300;
+
+              span {
+                color: $purple-900;
+                font-weight: 700;
+              }
+            }
+
+            &.shipping {
+              background-color: $sky-500;
+
+              span {
+                color: $white;
+                font-weight: 700;
+              }
+            }
+
+            &.completed {
+              background-color: $gold-400;
+
+              span {
+                color: $brand-primary-900;
+                font-weight: 700;
+              }
+            }
+          }
+        }
+
+        .created-date {
+          justify-self: center;
+
+          @include rwd-max(768px) {
+            justify-self: flex-start;
+          }
+        }
+
+        .order-total_wrap {
+          @include flex(row, nowrap, center, flex-end, 10px);
+
+          .price {
+            font-size: $m;
+            color: $gold-500;
+          }
+        }
+      }
+
+      .order-products {
+        @include flex(row, nowrap, center, flex-start, 10px);
+
+        .product_wrap {
+          @include flex(row, nowrap, center, flex-start, 10px);
+        }
+      }
     }
   }
 }

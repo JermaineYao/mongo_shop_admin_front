@@ -89,3 +89,7 @@ export function orderStatusName(orderStatus) {
       return '已取消'
   }
 }
+
+export function orderStatusClass(orderStatus) {
+  return `order-status ${orderStatus}`
+}

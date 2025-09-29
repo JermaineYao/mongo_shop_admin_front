@@ -35,46 +35,42 @@ queryMyOrders()
     </div>
 
     <main v-if="orders.length > 0" class="order_container">
-      <section v-for="order in orders" :key="order.orderNo" class="order-item">
-        <article>
+      <section
+        v-for="order in orders"
+        :key="order.orderNo"
+        class="order-item"
+        @click="navigateTo(`/shop/user/order/${order.orderNo}`)"
+      >
+        <article class="order-main">
           <div class="order-no_wrap">
-            <span>編號</span>
             <span class="order-no">{{ order.orderNo }}</span>
-          </div>
-
-          <div class="order-created">
-            <span>日期</span>
-            <span>{{ twTime(order.createdAt) }}</span>
-          </div>
-
-          <div class="order-total_wrap">
-            <span>總額</span>
-            <span class="order-no">{{ formatCurrency(order.totalAmount) }}</span>
-            <span class="unit">NTD </span>
-          </div>
-
-          <div class="order-total_wrap">
-            <span>狀態</span>
-            <span class="order-no">{{ orderStatusName(order.orderStatus) }}</span>
-          </div>
-
-          <div class="order-products">
-            <span>購買商品</span>
-
-            <div class="product_wrap">
-              <template v-for="(p, i) in order.productsOrdered" :key="i">
-                <div
-                  class="product"
-                  :style="{
-                    background: `url(${p.mainPhoto.url}) center/cover no-repeat`
-                  }"
-                ></div>
-                <span>x</span>
-                <span>{{ p.quantity }}</span>
-              </template>
+            <div :class="orderStatusClass(order.orderStatus)">
+              <span>{{ orderStatusName(order.orderStatus) }}</span>
             </div>
           </div>
+
+          <span class="created-date">{{ twTime(order.createdAt) }}</span>
+
+          <div class="order-total_wrap">
+            <span class="price">{{ formatCurrency(order.totalAmount) }}</span>
+            <span class="unit">NTD </span>
+          </div>
         </article>
+
+        <div class="order-products">
+          <span>購買商品</span>
+
+          <div class="product_wrap">
+            <template v-for="(p, i) in order.productsOrdered" :key="i">
+              <div
+                class="product"
+                :style="{
+                  background: `url(${p.mainPhoto.url}) center/cover no-repeat`
+                }"
+              ></div>
+            </template>
+          </div>
+        </div>
       </section>
     </main>
 
