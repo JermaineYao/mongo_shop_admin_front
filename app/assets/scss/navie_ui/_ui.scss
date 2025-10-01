@@ -77,6 +77,10 @@
   font-size: $n;
 }
 
+.n-pagination-item--disabled {
+  display: none !important;
+}
+
 .n-switch {
   @include glass($purple-50, 25px);
 

@@ -89,12 +89,12 @@ function setScrollMax() {
     <nav class="nav-home" @click="navigateTo({ path: '/shop/products' })">
       <span>前往購物</span>
 
-      <svg width="40" height="40">
-        <circle class="circle-base" cx="20" cy="20" r="19" />
+      <svg id="nav-home-circle">
+        <circle class="circle-base" />
 
-        <circle class="circle-active active-1" cx="20" cy="20" r="19" fill="rgba(0, 0, 0, 0)" />
+        <circle class="circle-active" fill="rgba(0, 0, 0, 0)" />
 
-        <text x="8" y="25">GO</text>
+        <text>GO</text>
       </svg>
     </nav>
   </div>

@@ -86,6 +86,10 @@ function toggleFavorite(productId, index) {
 
 <template>
   <div class="page favorite">
+    <div class="header">
+      <span>我的最愛</span>
+    </div>
+
     <main v-if="myFavorite.length > 0" class="favorite_container">
       <section v-for="(f, index) in myFavorite" :key="f.favoriteId" class="favorite-item">
         <div class="product_wrap">

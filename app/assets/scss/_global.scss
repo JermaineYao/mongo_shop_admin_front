@@ -26,6 +26,10 @@ body {
   height: 100dvh;
   min-height: 100vh;
   min-height: 100dvh;
+}
+
+body,
+pre {
   font-family: 'Cormorant Garamond', 'Noto Serif TC', 'Zen Old Mincho', serif;
 }
 
@@ -46,27 +50,28 @@ h1 {
   overflow-y: scroll;
 }
 
-.letter {
-  display: inline-block;
-  line-height: 1em;
-  opacity: 0;
-  transform: translateY(100px);
-}
-
 .btn {
   @include no-select();
   @include frc;
   @include glass($white-15);
   gap: 10px;
   width: fit-content;
-  padding: 5px 15px;
+  padding: 3px 10px;
   cursor: pointer;
   transition: all 500ms ease;
 
+  @include rwd-min(1920px) {
+    padding: 5px 15px;
+  }
+
   span {
     color: $white-60;
-    font-size: $d;
+    transform: translateY(1px);
     white-space: nowrap;
+
+    @include rwd-min(1920px) {
+      font-size: $s;
+    }
   }
 
   &:hover {

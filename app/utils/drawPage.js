@@ -6,7 +6,9 @@ export function DrawPage() {
   this.angle = 0
   this.opacity = 0
   this.ctx = null
-  this.animationId = null
+  this.tween = null //  tween
+  this.fadeTween = null // 淡出 tween
+  this.timeoutId = null //  setTimeout
 }
 
 const pi = Math.PI
@@ -68,10 +70,17 @@ DrawPage.prototype.drawStaticMark = function () {
 }
 
 DrawPage.prototype.drawMark = function (animationFn = null) {
+  // 若已存在舊 tween，先砍掉
+  if (this.tween) this.tween.kill()
+
+  this.angle = 0
+  this.opacity = 0
+
   gsap.to(this, 2, {
+    duration: 2,
     angle: pi * 2,
     opacity: 0.8,
-    ease: 'easeIn',
+    ease: 'power2.out',
     onUpdate: () => this.drawCircle(this.angle, this.opacity),
     onComplete: () => {
       this.drawStaticMark()
@@ -81,37 +90,40 @@ DrawPage.prototype.drawMark = function (animationFn = null) {
           this.remove()
 
           animationFn()
-        }, 1500)
+        }, 1000)
       }
     }
   })
 }
-
-// DrawPage.prototype.drawText = function (opacity) {
-//   this.ctx.clearRect(0, 0, this.width, this.height)
-//   this.ctx.beginPath()
-//   this.ctx.fillStyle = gold(opacity)
-//   this.ctx.font = '80px "Liu Jian Mao Cao"'
-//   this.ctx.textAlign = 'center'
-//   this.ctx.fillText('陶', this.width * 0.5 - 5, this.height * 0.5 + 25)
-//   this.ctx.stroke()
-// }
 
 DrawPage.prototype.remove = function () {
   gsap.to('#page-animation', {
     opacity: 0,
     duration: 0.2,
     onComplete: function () {
+      const canvas = document.getElementById('page-animation')
+      canvas.remove()
       this.height = 0
       this.width = 0
       this.ctx = null
-      const canvas = document.getElementById('page-animation')
-      canvas.remove()
     }
   })
 }
 
-// DrawPage.prototype.cancelAnimation = function () {
-//   cancelAnimationFrame(this.animationId)
-//   this.animationId = null
-// }
+DrawPage.prototype.destroy = function () {
+  if (this.tween) {
+    this.tween.kill()
+    this.tween = null
+  }
+  if (this.fadeTween) {
+    this.fadeTween.kill()
+    this.fadeTween = null
+  }
+  if (this.timeoutId) {
+    clearTimeout(this.timeoutId)
+    this.timeoutId = null
+  }
+  const canvas = document.getElementById('page-animation')
+  if (canvas) canvas.remove()
+  this.ctx = null
+}

@@ -18,6 +18,13 @@
       overflow-x: hidden;
     }
 
+    .letter {
+      display: inline-block;
+      line-height: 1em;
+      opacity: 0;
+      transform: translateY(100px);
+    }
+
     .home-page {
       width: inherit;
       padding: 60px;
@@ -87,7 +94,6 @@
   nav.nav-home {
     @include frl;
     gap: 10px;
-    // padding: 5px 10px;
     position: fixed;
     color: rgb(238, 238, 238);
     bottom: 60px;
@@ -96,10 +102,15 @@
     z-index: 50;
 
     span {
-      font-size: $n;
+      font-size: $s;
       color: $white-60;
       letter-spacing: 2px;
+      transform: translateY(2px);
       transition: all 600ms ease;
+
+      @include rwd-min(1920px) {
+        font-size: $n !important;
+      }
     }
 
     @include rwd-max(1024px) {
@@ -130,6 +141,29 @@
       }
     }
 
+    svg#nav-home-circle {
+      width: 32px;
+      height: 32px;
+
+      @include rwd-min(1920px) {
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+    .circle-base,
+    .circle-active {
+      cx: 16px;
+      cy: 16px;
+      r: 15px;
+
+      @include rwd-min(1920px) {
+        cx: 20px;
+        cy: 20px;
+        r: 19px;
+      }
+    }
+
     .circle-base {
       stroke: $white;
       fill: $transparent;
@@ -139,13 +173,20 @@
     .circle-active {
       stroke: $white;
       stroke-width: 2;
-      stroke-dasharray: 20;
+      stroke-dasharray: 16;
       opacity: 0;
     }
 
     text {
+      transform: translate(6px, 21px);
+      font-size: $xs;
       fill: $white-60;
       transition: all 600ms ease;
+
+      @include rwd-min(1920px) {
+        font-size: $d;
+        transform: translate(7px, 26px);
+      }
     }
 
     @keyframes circleRotate {

@@ -10,9 +10,16 @@ definePageMeta({
   requireLogin: false
 })
 
-// const { $http } = useNuxtApp()
 const route = useRoute()
 const router = useRouter()
+
+const productStore = useProductStore()
+const { productPath } = storeToRefs(productStore)
+
+// 離開畫面時紀錄當下 url
+onUnmounted(() => {
+  productPath.value = route.fullPath
+})
 
 // 查詢條件
 const searchCondition = reactive({

@@ -1,0 +1,139 @@
+@use '@/assets/scss/variables' as *;
+@use '@/assets/scss/mixins' as *;
+
+.page.order-detail {
+  @include fcc;
+  padding-bottom: 0px;
+
+  span {
+    letter-spacing: 1px;
+    color: $gray-400;
+  }
+
+  .item_wrap {
+    @include frl;
+    gap: 10px;
+  }
+
+  .item-name {
+    color: $white;
+  }
+
+  .item-name,
+  .item-value {
+    @include rwd-min(1920px) {
+      font-size: $d;
+    }
+  }
+
+  hr {
+    height: 1px;
+    width: 100%;
+    border: none;
+    background-color: $gray-400;
+  }
+
+  .order-detail_container {
+    @include flex(column, nowrap, stretch, flex-start, 30px);
+    width: 1024px;
+    padding: 30px 0 40px 0;
+    flex-grow: 1;
+
+    @include rwd-max(1024px) {
+      width: 100vw;
+      padding: 30px 20px 40px 20px;
+    }
+
+    .order-detail-head {
+      @include flex(column, nowrap, stretch, flex-start, 10px);
+
+      .btn {
+        align-self: flex-end;
+      }
+
+      .order-status_wrap {
+        @include flex(row, nowrap, center, space-between);
+
+        .order-no {
+          font-size: $m;
+          color: $gold-500;
+        }
+
+        .order-status {
+          padding: 2px 5px;
+          width: fit-content;
+          flex-shrink: 0;
+
+          span {
+            display: block;
+            font-size: $xs;
+            white-space: nowrap;
+            transform: translateY(1px) !important;
+          }
+
+          &.cancelled {
+            @include glass($black-60);
+
+            span {
+              color: $gray-500;
+              font-weight: 700;
+            }
+          }
+
+          &.pending {
+            @include glass($pink-100);
+
+            span {
+              color: $purple-900;
+              font-weight: 700;
+            }
+          }
+
+          &.shipping {
+            @include glass($sky-100);
+
+            span {
+              color: $purple-900;
+              font-weight: 700;
+            }
+          }
+
+          &.completed {
+            background-color: $gold-400;
+
+            span {
+              color: $brand-primary-900;
+              font-weight: 700;
+            }
+          }
+        }
+      }
+    }
+
+    .order-detail-body {
+      @include flex(column, nowrap, stretch, flex-start, 20px);
+
+      .receiver_wrap {
+        @include flex(column, nowrap, stretch, flex-start, 10px);
+      }
+    }
+
+    .products-ordered {
+      @include glass($purple-50, 25px);
+      width: 100%;
+      // padding: 20px;
+      padding-bottom: 10px;
+      cursor: pointer;
+
+      hr {
+        width: calc(100% - 40px);
+        background-color: $white-15;
+      }
+
+      .summary {
+        @include flex(row, nowrap, center, space-between);
+        padding: 10px 20px;
+      }
+    }
+  }
+}

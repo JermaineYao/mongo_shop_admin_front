@@ -19,10 +19,7 @@ function logout() {
   })
 }
 
-function toLogin() {
-  productPath.value = route.fullPath
-  navigateTo('/shop/login')
-}
+console.log(route.name)
 </script>
 
 <template>
@@ -31,18 +28,17 @@ function toLogin() {
     <LogoMobile @click="navigateTo('/')" />
 
     <div class="actions_container">
-      <div
-        v-if="route.name !== 'shop-products'"
-        class="icon_wrap"
-        @click="navigateTo('/shop/products')"
-      >
+      <div v-if="route.name !== 'shop-products'" class="icon_wrap" @click="navigateTo(productPath)">
         <IconShop width="33px" />
       </div>
 
-      <div v-if="route.name !== 'shop-products'" class="line-verticle"></div>
+      <div
+        v-if="route.name !== 'shop-products' && route.name !== 'shop-login'"
+        class="line-verticle"
+      ></div>
 
       <div
-        v-if="user?.photo.url && route.name !== 'shop-user'"
+        v-if="isUserLogin && user?.photo.url && route.name !== 'shop-user'"
         class="icon_wrap user-icon"
         :style="{
           background: `url(${user.photo.url}) center/cover no-repeat`
@@ -51,14 +47,17 @@ function toLogin() {
       ></div>
 
       <div
-        v-if="!user?.photo.url && route.name !== 'shop-user'"
+        v-if="isUserLogin && !user?.photo.url && route.name !== 'shop-user'"
         class="icon_wrap"
         @click="navigateTo('/shop/user')"
       >
         <IconUser />
       </div>
 
-      <div v-if="route.name !== 'shop-user'" class="line-verticle"></div>
+      <div
+        v-if="isUserLogin && route.name !== 'shop-user' && route.name !== 'shop-login'"
+        class="line-verticle"
+      ></div>
 
       <div
         v-if="isUserLogin && route.name !== 'shop-user-favorite'"
@@ -84,11 +83,15 @@ function toLogin() {
         <IconOrder />
       </div>
 
-      <div v-if="isUserLogin" class="icon_wrap" @click="logout">
+      <div v-if="isUserLogin && route.name !== 'shop-login'" class="icon_wrap" @click="logout">
         <IconLogout />
       </div>
 
-      <div v-if="!isUserLogin" class="icon_wrap" @click="toLogin">
+      <div
+        v-if="!isUserLogin && route.name !== 'shop-login'"
+        class="icon_wrap"
+        @click="navigateTo('/shop/login')"
+      >
         <IconLogin />
       </div>
     </div>

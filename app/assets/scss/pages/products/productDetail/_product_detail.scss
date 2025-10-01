@@ -67,16 +67,29 @@
     }
 
     .name-main {
-      font-size: $m;
+      font-size: $d;
+
+      @include rwd-min(1920px) {
+        font-size: $m;
+      }
     }
 
-    .name-sub {
-      font-size: $s;
+    .name-sub,
+    .category {
+      font-size: $xxs;
+      letter-spacing: 1px;
+
+      @include rwd-max(1366px) {
+        font-size: $xs;
+      }
+
+      @include rwd-min(1920px) {
+        font-size: $s;
+      }
     }
 
     .category {
       margin-left: auto;
-      font-size: $s;
     }
   }
 
@@ -135,7 +148,7 @@
       }
 
       .price {
-        font-size: $m;
+        font-size: $n;
         color: $gold-500;
       }
 
@@ -183,7 +196,7 @@
 
     .product-body {
       @include flex(column, nowrap, stretch, flex-start, 30px);
-      flex: 1 1 0;
+      flex: 2 1 0;
 
       .img-menu {
         @include grid(120px, 10px, 10px, 0.25fr);
@@ -213,6 +226,10 @@
         .description {
           font-size: $s;
           text-align: justify;
+
+          @include rwd-min(1920px) {
+            font-size: $d;
+          }
         }
       }
     }

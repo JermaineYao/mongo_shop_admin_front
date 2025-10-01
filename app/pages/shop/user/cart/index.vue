@@ -243,6 +243,10 @@ function createOrder() {
 
 <template>
   <div class="page cart">
+    <div class="header">
+      <span>我的購物車</span>
+    </div>
+
     <main v-if="cartSummary.grandTotal > 0" class="cart_container">
       <section class="cart-operation">
         <article class="cart-summary">

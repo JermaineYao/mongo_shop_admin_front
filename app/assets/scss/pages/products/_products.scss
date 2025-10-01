@@ -8,7 +8,6 @@
   .search_container {
     @include flex(column, nowrap, flex-end, flex-start, 20px);
     opacity: 1;
-    // position: relative;
     z-index: 100;
 
     .search_wrap {
@@ -29,8 +28,11 @@
 
         .search-item-name {
           color: $white;
-          font-size: $s;
           padding-left: 2px;
+
+          @include rwd-min(1920px) {
+            font-size: $s;
+          }
         }
 
         .n-input-number {
@@ -75,7 +77,6 @@
     }
 
     @include rwd-max(768px) {
-      // @include glass($purple-700);
       top: 82px;
       height: calc(100vh - 80px);
     }
@@ -146,11 +147,6 @@
         color: $white;
         transition: all 500ms ease;
       }
-
-      // @include rwd-max(768px) {
-      //   top: -50px;
-      //   right: 0;
-      // }
     }
   }
 
@@ -162,6 +158,10 @@
     .products-list {
       @include grid(250px, 20px, 20px, 0.25fr);
       width: 100%;
+
+      @include rwd-min(1920px) {
+        @include grid(300px, 20px, 20px, 0.25fr);
+      }
 
       @include rwd-max(1366px) {
         @include grid(250px, 20px, 20px, 1fr);
@@ -211,11 +211,25 @@
         }
 
         .name-main {
-          font-size: $n;
+          font-size: $d;
+
+          @include rwd-min(1920px) {
+            font-size: $n;
+          }
         }
 
-        .name-sub {
-          font-size: $xs;
+        .name-sub,
+        .category {
+          font-size: $xxs;
+          letter-spacing: 1px;
+
+          @include rwd-max(1366px) {
+            font-size: $xs;
+          }
+
+          @include rwd-min(1920px) {
+            font-size: $xs;
+          }
         }
 
         .category {
@@ -236,13 +250,12 @@
 
       .price_wrap {
         .price {
-          font-size: $m;
+          font-size: $n;
           color: $gold-500;
           margin-right: 10px;
         }
 
         .price-unit {
-          font-size: $xs;
           color: $gray-400;
         }
       }

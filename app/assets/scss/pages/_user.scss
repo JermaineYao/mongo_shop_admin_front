@@ -81,7 +81,7 @@
 
     .user-item {
       @include glass($purple-50, 25px);
-      padding: 30px 20px;
+      padding: 20px;
       width: 800px;
 
       @include rwd-max(768px) {
@@ -91,23 +91,38 @@
 
     .user-main {
       @include fcc;
-      gap: 30px;
+      gap: 20px;
+      padding: 30px 20px 20px 20px;
+
+      @include rwd-min(1920px) {
+        gap: 30px;
+      }
 
       .user-img_container {
         position: relative;
-        width: 200px;
-        height: 200px;
+        width: 170px;
+        height: 170px;
         border-radius: 50%;
+
+        @include rwd-min(1920px) {
+          width: 200px;
+          height: 200px;
+        }
 
         #user-photo-upload {
           display: none;
         }
 
         .user-img {
-          width: 200px;
-          height: 200px;
+          width: 170px;
+          height: 170px;
           border-radius: 50%;
           cursor: pointer;
+
+          @include rwd-min(1920px) {
+            width: 200px;
+            height: 200px;
+          }
         }
 
         .user-img-empty {
@@ -130,8 +145,8 @@
           position: absolute;
           top: -15px;
           right: -30px;
-          width: 60px;
-          height: 60px;
+          width: 32px;
+          height: 32px;
           cursor: pointer;
 
           svg path {
@@ -151,11 +166,20 @@
         @include flex(column, nowrap, flex-end, flex-start);
 
         .account {
-          font-size: $l;
+          font-size: $ml;
+
+          @include rwd-min(1920px) {
+            font-size: $l;
+          }
         }
 
         .email {
-          font-size: $n;
+          font-size: $s;
+          color: $gray-400;
+
+          @include rwd-min(1920px) {
+            font-size: $n;
+          }
         }
       }
     }

@@ -7,38 +7,52 @@ let canvas = null
 const loadingAnimation = ref(false)
 
 onMounted(() => {
-  gsap.set('.main', { opacity: 0 })
-  gsap.set('.nav-home', { opacity: 0 })
-  gsap.set('.poetry_container', { opacity: 0 })
+  gsap.set(['.main', '.nav-home', '.poetry_container'], { opacity: 0 })
   resetSvgLine()
 
   /*--------------- cover animation ---------------*/
   loadingAnimation.value = true
-
   pageAnimation()
 
-  window.addEventListener('resize', pageAnimation)
+  const onResize = () => {
+    if (!canvas) return
+    canvas.init()
+    canvas.drawStaticMark() // 或依需求重畫一幀
+    svgLineAnimation()
+  }
+
+  window.addEventListener('resize', onResize)
+  window.homeOnResize = onResize
   window.addEventListener('resize', svgLineAnimation)
 })
 
 onUnmounted(() => {
-  window.removeEventListener('resize', pageAnimation)
+  window.removeEventListener('resize', window.homeOnResize)
   window.removeEventListener('resize', svgLineAnimation)
+
+  if (canvas) {
+    canvas.destroy()
+    canvas = null
+  }
+
+  gsap.killTweensOf([
+    '.header',
+    '.main',
+    '.nav-home',
+    '.poetry_container',
+    '.corner line',
+    '#page-animation'
+  ])
 })
 
 function pageAnimation() {
-  if (loadingAnimation.value) {
+  if (!loadingAnimation.value) return
+  if (!canvas) {
     canvas = new DrawPage().setCanvas('.home').init()
-    canvas.drawMark()
-
-    setTimeout(() => {
-      nextTick(() => {
-        canvas.remove()
-      })
-
-      showHomeContent()
-    }, 2300)
+  } else {
+    canvas.init()
   }
+  canvas.drawMark(() => showHomeContent())
 }
 
 function showHomeContent() {

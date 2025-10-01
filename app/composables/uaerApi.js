@@ -106,6 +106,16 @@ export const useUserApi = () => {
     return $http.get('/order/my_orders')
   }
 
+  // 查看訂單
+  function queryOrderApi(orderNo) {
+    return $http.get(`/order/my_order/${orderNo}`)
+  }
+
+  // 取消訂單
+  function cancelOrderApi(orderId) {
+    return $http.patch(`/order/${orderId}/status/cancelled`)
+  }
+
   return {
     signInApi,
     signOutApi,
@@ -127,6 +137,8 @@ export const useUserApi = () => {
     removeFromCartApi,
     emptyCartApi,
     createOrderApi,
-    queryMyOrdersApi
+    queryMyOrdersApi,
+    queryOrderApi,
+    cancelOrderApi
   }
 }
