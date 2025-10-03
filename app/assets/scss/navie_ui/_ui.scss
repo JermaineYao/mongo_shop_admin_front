@@ -12,13 +12,17 @@
 .n-input .n-input__textarea-el {
   caret-color: $white !important;
   color: $white !important;
-  font-size: $n;
+  // font-size: $n;
   letter-spacing: 1px;
 }
 
 .n-form-item-label__text {
-  font-size: $d;
+  font-size: $s;
   color: $gray-400;
+
+  @include rwd-min(1920px) {
+    font-size: $d;
+  }
 }
 
 /* 必填星號 */

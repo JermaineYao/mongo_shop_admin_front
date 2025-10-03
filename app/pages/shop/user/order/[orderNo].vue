@@ -8,7 +8,7 @@ definePageMeta({
 })
 
 const userStore = useUserStore()
-const { user } = storeToRefs(userStore)
+const { user, isUserLogin } = storeToRefs(userStore)
 
 const route = useRoute()
 const orderNo = route.params.orderNo
@@ -29,21 +29,64 @@ function queryOrder() {
   })
 }
 
-queryOrder()
+// 預設查詢
+if (import.meta.client) {
+  queryOrder()
+}
 
 // 取消訂單
+const reqResult = ref(false)
+const reqMsg = ref('')
+
 function cancelOrder() {
-  cancelOrderApi(order._id).then((res) => {
-    if (res.status === 'success') {
-      queryOrder()
-    }
-  })
+  if (!isUserLogin.value) {
+    return navigateTo('/shop/products')
+  }
+
+  if (!user.value.active) {
+    reqMsg.value = '帳戶未啟用'
+
+    setTimeout(() => {
+      user.value.active = false
+      reqMsg.value = ''
+    }, 3000)
+
+    return
+  }
+
+  cancelOrderApi(order._id)
+    .then((res) => {
+      if (res.status === 'success') {
+        queryOrder()
+      }
+    })
+    .catch((err) => {
+      reqMsg.value = err.data.message
+
+      if (err.status === 401) {
+        navigateTo('/shop/products')
+      } else if (err.status === 403) {
+        setTimeout(() => {
+          user.value.active = false
+          reqMsg.value = ''
+        }, 3000)
+      } else {
+        setTimeout(() => {
+          reqMsg.value = ''
+        }, 3000)
+      }
+    })
 }
 </script>
 
 <template>
   <div class="page order-detail">
     <main class="order-detail_container">
+      <div class="btn go-back" @click="navigateTo('/shop/user/order')">
+        <IconReturnLeft />
+        <span>回到我的訂單</span>
+      </div>
+
       <div class="order-detail-head">
         <div class="order-status_wrap">
           <span class="order-no">{{ order?.orderNo }}</span>
@@ -75,12 +118,16 @@ function cancelOrder() {
 
         <hr />
 
-        <div
-          v-if="['pending', 'shipping'].includes(order?.orderStatus) && user.active"
-          class="btn"
-          @click="cancelOrder"
-        >
-          <span>取消訂單</span>
+        <div class="action_wrap">
+          <span :class="[reqResult ? 'res-msg success' : 'res-msg failed']">{{ reqMsg }}</span>
+
+          <div
+            v-if="['pending', 'shipping'].includes(order?.orderStatus) && user.active"
+            class="btn"
+            @click="cancelOrder"
+          >
+            <span>取消訂單</span>
+          </div>
         </div>
       </div>
 

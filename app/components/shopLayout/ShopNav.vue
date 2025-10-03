@@ -19,7 +19,17 @@ function logout() {
   })
 }
 
-console.log(route.name)
+const requireLogin = [
+  'shop-user-order-orderNo',
+  'shop-user-order',
+  'shop-user-favorite',
+  'shop-user-cart',
+  'shop-user'
+]
+
+watchEffect(() => {
+  if (requireLogin.includes(route.name) && !isUserLogin.value) navigateTo('/shop/products')
+})
 </script>
 
 <template>
@@ -68,7 +78,7 @@ console.log(route.name)
       </div>
 
       <div
-        v-if="isUserLogin && route.name !== 'shop-user-cart' && user.active"
+        v-if="isUserLogin && route.name !== 'shop-user-cart'"
         class="icon_wrap"
         @click="navigateTo('/shop/user/cart')"
       >
@@ -76,7 +86,7 @@ console.log(route.name)
       </div>
 
       <div
-        v-if="isUserLogin && route.name !== 'shop-user-order' && user.active"
+        v-if="isUserLogin && route.name !== 'shop-user-order'"
         class="icon_wrap"
         @click="navigateTo('/shop/user/order')"
       >

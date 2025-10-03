@@ -71,19 +71,19 @@ onUnmounted(() => {
     <article class="about_container">
       <div class="about_wrap">
         <div class="about-item">
-          <span>歡迎來到陶工坊！</span>
+          <span>歡迎來到陶釉坊！</span>
           <span>我們是一個致力於陶瓷藝術的工作室。</span>
         </div>
 
         <div class="about-item">
-          <span>陶工坊成立於 2010 年，</span>
+          <span>陶釉坊成立於 2010 年，</span>
           <span>我們的創立動機是為了將陶瓷的美麗和獨特之處帶給更多的人們。</span>
           <span>我們相信陶瓷是一種融合藝術和工藝的優雅之物，</span>
           <span>它能夠豐富生活、點綴空間，讓人們感受到美的力量和魅力。</span>
         </div>
 
         <div class="about-item">
-          <span>在陶工坊，</span>
+          <span>在陶釉坊，</span>
           <span>我們以客戶的滿意度為首要目標。</span>
           <span>不僅追求產品的優質和精湛工藝，</span>
           <span>還注重與客戶的溝通和理解，</span>

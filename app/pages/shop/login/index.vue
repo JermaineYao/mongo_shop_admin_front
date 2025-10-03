@@ -11,8 +11,8 @@ const productStore = useProductStore()
 const { productPath } = storeToRefs(productStore)
 
 const user = reactive({
-  account: '',
-  pwd: ''
+  account: 'sayoko',
+  pwd: '@Test1234'
 })
 
 const rules = {
@@ -52,8 +52,8 @@ function signIn() {
       }
     })
     .catch((err) => {
-      if (err.statusCode === 401) {
-        const msg = err.message
+      if (err) {
+        const msg = '請檢查帳號, 密碼是否正確'
 
         serverErrors.account = msg
         serverErrors.pwd = msg

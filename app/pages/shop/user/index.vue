@@ -11,7 +11,7 @@ definePageMeta({
 
 // 帳號
 const userStore = useUserStore()
-const { user } = storeToRefs(userStore)
+const { user, isUserLogin } = storeToRefs(userStore)
 
 const {
   queryMyAccountApi,
@@ -30,15 +30,13 @@ function queryMyAccount() {
       if (userData.createAt) userData.createAt = twTime(userData.createAt)
       if (userData.modifiedAt) userData.modifiedAt = twTime(userData.modifiedAt)
 
-      for (const key in user.value) {
-        user.value[key] = userData[key]
-      }
+      Object.assign(user.value, userData)
     }
   })
 }
 
 // 預設查詢
-if (import.meta.client) {
+if (import.meta.client && isUserLogin.value) {
   queryMyAccount()
 }
 
@@ -62,6 +60,11 @@ function setPhoto(e) {
 
 // 上傳我的圖片
 function uploadMyPhoto(file) {
+  if (!isUserLogin.value) {
+    navigateTo('/shop/products')
+    return
+  }
+
   if (!file) return
 
   const formData = new FormData()
@@ -70,7 +73,6 @@ function uploadMyPhoto(file) {
   uploadMyPhotoApi(formData).then((res) => {
     if (res.status === 'success') {
       const photoData = res.data.photo
-      console.log(photoData)
 
       for (const key in user.value.photo) {
         user.value.photo[key] = photoData[key]
@@ -80,6 +82,11 @@ function uploadMyPhoto(file) {
 }
 
 function triggerUpload() {
+  if (!isUserLogin.value) {
+    navigateTo('/shop/products')
+    return
+  }
+
   const upload = document.getElementById('user-photo-upload')
   upload.value = null
   upload.click()
@@ -87,6 +94,11 @@ function triggerUpload() {
 
 // 刪除我的圖片
 function deleteMyPhoto() {
+  if (!isUserLogin.value) {
+    navigateTo('/shop/products')
+    return
+  }
+
   deleteMyPhotoApi().then((res) => {
     if (res.status === 'success') {
       for (const key in user.value.photo) {
@@ -98,6 +110,11 @@ function deleteMyPhoto() {
 
 // 停用,啟用 帳號
 function toggleAccountEnabled(enable) {
+  if (!isUserLogin.value) {
+    navigateTo('/shop/products')
+    return
+  }
+
   const query = { enable }
 
   toggleAccountEnabledApi(query)
@@ -116,6 +133,11 @@ const contactResSuccess = ref('')
 const contactResFailed = ref('')
 
 function toggleEditContact(edit) {
+  if (!isUserLogin.value) {
+    navigateTo('/shop/products')
+    return
+  }
+
   editContact.value = edit
 
   if (!editContact.value) {
@@ -165,6 +187,11 @@ const contactRules = {
 }
 
 function updateContact() {
+  if (!isUserLogin.value) {
+    navigateTo('/shop/products')
+    return
+  }
+
   contactResFailed.value = ''
   const query = {}
 
@@ -228,6 +255,11 @@ const showPwdContent = reactive({
 })
 
 function togglePwdContent(field) {
+  if (!isUserLogin.value) {
+    navigateTo('/shop/products')
+    return
+  }
+
   showPwdContent[field] = !showPwdContent[field]
 }
 

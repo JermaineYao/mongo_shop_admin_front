@@ -82,7 +82,7 @@ onUnmounted(() => {
 
       <div class="design_wrap">
         <div class="design-item">
-          <span>在陶工坊，</span>
+          <span>在陶釉坊，</span>
           <span>我們追求獨特的設計風格。</span>
         </div>
 
@@ -99,7 +99,7 @@ onUnmounted(() => {
         </div>
 
         <div class="design-item">
-          <span>我們的陶工坊團隊將藝術和工藝相結合，</span>
+          <span>我們的陶釉坊團隊將藝術和工藝相結合，</span>
           <span>追求卓越和創新。</span>
         </div>
       </div>

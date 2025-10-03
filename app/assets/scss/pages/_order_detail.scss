@@ -47,6 +47,11 @@
     .order-detail-head {
       @include flex(column, nowrap, stretch, flex-start, 10px);
 
+      .action_wrap {
+        @include flex(row, nowrap, center, flex-end);
+        gap: 10px;
+      }
+
       .btn {
         align-self: flex-end;
       }

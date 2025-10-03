@@ -1,39 +1,34 @@
-import { twTime } from '@/utils/utils'
-
 export default defineNuxtRouteMiddleware(async (to) => {
-  const { $http } = useNuxtApp()
+  if (!to.meta.requireLoginCheck) return
 
+  const { $http } = useNuxtApp()
   const userStore = useUserStore()
   const { user, isUserLogin } = storeToRefs(userStore)
-  const { resetUser } = userStore
 
-  if (to.meta.requireLoginCheck) {
-    await $http
-      .get('/user/is_login')
-      .then((res) => {
-        if (res.status === 'success') {
-          const data = res.data
+  try {
+    const res = await $http.get('/user/is_login')
 
-          if (data.createAt) data.createAt = twTime(res.data.createAt)
-          if (data.modifiedAt) data.modifiedAt = twTime(res.data.modifiedAt)
+    if (res?.status === 'success') {
+      Object.assign(user.value, res.data)
+      isUserLogin.value = true
 
-          for (const k in user.value) {
-            user.value[k] = data[k]
-          }
+      if (to.meta.requireActive && !res.data.active) {
+        return navigateTo('/shop/products', { replace: true })
+      }
+      return
+    }
 
-          isUserLogin.value = true
-
-          if (to.meta.requireActive && !data.active) {
-            return navigateTo(-1)
-          }
-        }
-      })
-      .catch((err) => {
-        resetUser()
-
-        if (err && to.meta.requireLogin) {
-          return navigateTo(-1)
-        }
-      })
+    // 未登入
+    userStore.resetUser()
+    if (to.meta.requireLogin) {
+      return navigateTo('/shop/products', { replace: true })
+    }
+  } catch (err) {
+    if (err) {
+      userStore.resetUser()
+      if (to.meta.requireLogin) {
+        return navigateTo('/shop/products', { replace: true })
+      }
+    }
   }
 })

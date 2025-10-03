@@ -42,13 +42,21 @@ export default defineNuxtPlugin((nuxtApp) => {
       //   navigateTo(`/login?redirect=${encodeURIComponent(current)}`)
       // }
 
-      throw createError({
-        statusCode: response?.status || 500,
-        message:
-          response?._data?.msg ||
-          response?._data?.message ||
-          response?.statusText ||
-          'Unknown Error',
+      // throw createError({
+      //   statusCode: response?.status || 500,
+      //   message:
+      //     response?._data?.msg ||
+      //     response?._data?.message ||
+      //     response?.statusText ||
+      //     'Unknown Error',
+      //   data: response?._data
+      // })
+
+      // console.log('response', response)
+
+      // return Promise.reject(response?._data || { status: response?.status })
+      return Promise.reject({
+        status: response?.status,
         data: response?._data
       })
     }

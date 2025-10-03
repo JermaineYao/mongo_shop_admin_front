@@ -56,15 +56,16 @@ h1 {
   @include glass($white-15);
   gap: 10px;
   width: fit-content;
-  padding: 3px 10px;
+  padding: 3px 12px;
   cursor: pointer;
   transition: all 500ms ease;
 
   @include rwd-min(1920px) {
-    padding: 5px 15px;
+    padding: 4px 15px;
   }
 
   span {
+    letter-spacing: 1px;
     color: $white-60;
     transform: translateY(1px);
     white-space: nowrap;
@@ -79,7 +80,19 @@ h1 {
     transform: translate(2px, 2px);
 
     span {
-      color: $white;
+      color: $white !important;
     }
+  }
+}
+
+.res-msg {
+  color: $white !important;
+
+  &.success {
+    text-shadow: 0 0 4px $sky-300, 0 0 4px $sky-300, 0 0 4px $sky-300;
+  }
+
+  &.failed {
+    text-shadow: 0 0 4px $pink-700, 0 0 4px $pink-700, 0 0 4px $pink-300;
   }
 }

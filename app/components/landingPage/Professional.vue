@@ -79,7 +79,7 @@ onUnmounted(() => {
     <article class="professional_container">
       <div class="professional_wrap">
         <div class="professional-item">
-          <span>在陶工坊，</span>
+          <span>在陶釉坊，</span>
           <span>我們擁有一支專業的團隊，</span>
           <span>熟練掌握陶瓷製作的各個細節。</span>
         </div>

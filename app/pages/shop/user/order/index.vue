@@ -7,13 +7,17 @@ definePageMeta({
   requireLogin: true
 })
 
+const userStore = useUserStore()
+const { isUserLogin } = storeToRefs(userStore)
+
 const { queryMyOrdersApi } = useUserApi()
 
 const orders = ref([])
 
 function queryMyOrders() {
+  if (!isUserLogin.value) return
+
   queryMyOrdersApi().then((res) => {
-    console.log(res)
     if (res.status === 'success') {
       const data = res.data
       data.forEach((d) => {
@@ -25,7 +29,17 @@ function queryMyOrders() {
   })
 }
 
-queryMyOrders()
+// 預設查詢
+if (import.meta.client) {
+  queryMyOrders()
+}
+
+// 查看訂單
+function toOrder(orderNo) {
+  if (!isUserLogin.value) navigateTo('/shop/products')
+
+  navigateTo(`/shop/user/order/${orderNo}`)
+}
 </script>
 
 <template>
@@ -39,7 +53,7 @@ queryMyOrders()
         v-for="order in orders"
         :key="order.orderNo"
         class="order-item"
-        @click="navigateTo(`/shop/user/order/${order.orderNo}`)"
+        @click="toOrder(order.orderNo)"
       >
         <article class="order-main">
           <div class="order-no_wrap">

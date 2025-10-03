@@ -5,11 +5,16 @@ definePageMeta({
   requireLogin: true
 })
 
+const userStore = useUserStore()
+const { isUserLogin } = storeToRefs(userStore)
+
 const { queryMyFavoriteApi, toggleFavoriteApi, updateCartApi } = useUserApi()
 
 const myFavorite = ref([])
 
 function queryMyFavorite() {
+  if (!isUserLogin.value) return
+
   queryMyFavoriteApi().then((res) => {
     if (res.status === 'success') {
       const data = res.data
@@ -22,10 +27,18 @@ function queryMyFavorite() {
   })
 }
 
-queryMyFavorite()
+// 預設查詢
+if (import.meta.client) {
+  queryMyFavorite()
+}
 
 // 加入購物車
 function updateCart(productId, index) {
+  if (!isUserLogin.value) {
+    navigateTo('/shop/products')
+    return
+  }
+
   const query = {
     productId,
     quantity: 1
@@ -46,8 +59,11 @@ function updateCart(productId, index) {
       }
     })
     .catch((err) => {
-      if (err) {
-        myFavorite.value[index].reqMsg = '請稍後再試'
+      myFavorite.value[index].reqMsg = err.data.message
+
+      if (err.status === 401) {
+        navigateTo('/shop/products')
+      } else {
         myFavorite.value[index].reqResult = false
 
         setTimeout(() => {
@@ -60,6 +76,11 @@ function updateCart(productId, index) {
 
 // 新增,移除 我的最愛
 function toggleFavorite(productId, index) {
+  if (!isUserLogin.value) {
+    navigateTo('/shop/products')
+    return
+  }
+
   const query = {
     productId
   }
@@ -71,8 +92,11 @@ function toggleFavorite(productId, index) {
       }
     })
     .catch((err) => {
-      if (err) {
-        myFavorite.value[index].reqMsg = '請稍後再試'
+      myFavorite.value[index].reqMsg = err.data.message
+
+      if (err.status === 401) {
+        navigateTo('/shop/products')
+      } else {
         myFavorite.value[index].reqResult = false
 
         setTimeout(() => {
@@ -97,10 +121,6 @@ function toggleFavorite(productId, index) {
             :product="f.product"
             :is-sold-out="f?.product.inStock === 0 ? true : false"
           />
-
-          <!-- <div v-if="f?.product.inStock === 0" class="sold-out_wrap">
-            <span class="sold-out">已售完</span>
-          </div> -->
         </div>
 
         <div class="user-operation">

@@ -77,7 +77,7 @@ onUnmounted(() => {
     <article class="team_container">
       <div class="team_wrap team-description">
         <div class="team-item">
-          <span>陶工坊是由一群專業的人士組成的團隊。</span>
+          <span>陶釉坊是由一群專業的人士組成的團隊。</span>
           <span>都對陶瓷藝術充滿熱愛，</span>
           <span>並致力於創造出精美而獨特的陶瓷作品。</span>
         </div>

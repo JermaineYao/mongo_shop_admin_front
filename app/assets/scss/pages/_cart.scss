@@ -92,10 +92,12 @@
         @include flex(column, nowrap, stretch, flex-start, 20px);
       }
 
-      .cart-summary,
-      .action_wrap {
-        @include frl;
-        gap: 20px;
+      .cart-summary {
+        font-size: $s;
+
+        @include rwd-min(1920px) {
+          font-size: $d;
+        }
       }
 
       .action_wrap {
@@ -136,10 +138,8 @@
       }
 
       hr {
-        height: 1px;
         width: calc(100% - 40px);
-        border: none;
-        background-color: $white-15;
+        background-color: $white-30;
       }
 
       .price_wrap {
@@ -167,18 +167,6 @@
 
       .quantity_wrap {
         @include flex(column, nowrap, flex-end, space-between);
-      }
-    }
-
-    .res-msg {
-      color: $white;
-
-      &.success {
-        text-shadow: 0 0 4px $sky-300, 0 0 4px $sky-300, 0 0 4px $sky-300;
-      }
-
-      &.failed {
-        text-shadow: 0 0 4px $pink-700, 0 0 4px $pink-700, 0 0 4px $pink-300;
       }
     }
   }

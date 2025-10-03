@@ -6,13 +6,10 @@ const props = defineProps({
   }
 })
 
-const router = useRouter()
 const statusCode = props.error?.statusCode || 500
 
-console.log(props.error)
-
 function returnLastPage() {
-  router.go(-1)
+  navigateTo('/shop/products')
 }
 </script>
 
@@ -26,7 +23,7 @@ function returnLastPage() {
       >
 
       <div class="btn-return" @click="returnLastPage">
-        <span>回上一頁</span>
+        <span>回商品清單</span>
       </div>
     </div>
   </div>

@@ -58,6 +58,11 @@ const reqResult = reactive({
 const orderCount = ref(1)
 
 function updateCart() {
+  if (!isUserLogin.value) {
+    navigateTo('/shop/products')
+    return
+  }
+
   const query = {
     productId,
     quantity: orderCount.value * 1
@@ -90,6 +95,11 @@ function updateCart() {
 
 // 新增,移除 我的最愛
 function toggleFavorite() {
+  if (!isUserLogin.value) {
+    navigateTo('/shop/products')
+    return
+  }
+
   const query = {
     productId
   }
@@ -119,6 +129,13 @@ function toggleFavorite() {
       }
     })
 }
+
+// 回上一頁
+const router = useRouter()
+
+function goBack() {
+  router.back()
+}
 </script>
 
 <template>
@@ -130,6 +147,11 @@ function toggleFavorite() {
       }"
     >
       <div class="page-bg"></div>
+
+      <div class="btn go-back" @click="goBack">
+        <IconReturnLeft />
+        <span>回上一頁</span>
+      </div>
 
       <section class="product-names product-item">
         <article class="names_wrap">
@@ -147,7 +169,7 @@ function toggleFavorite() {
             <span class="price-unit">NTD / 件</span>
           </div>
 
-          <div class="favorite_container">
+          <div v-if="isUserLogin" class="favorite_container">
             <span :class="[reqResult.favorite ? 'res-msg success' : 'res-msg failed']">{{
               reqMsg.favorite
             }}</span>

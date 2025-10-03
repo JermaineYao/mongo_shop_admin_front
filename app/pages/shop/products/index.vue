@@ -37,6 +37,7 @@ const searchCondition = reactive({
 
 const config = useRuntimeConfig()
 const baseUrl = config.public.apiBase
+
 // 是否預設請求
 const isDefaultQuery = ref(true)
 

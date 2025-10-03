@@ -7,7 +7,3 @@ definePageMeta({
   pageTransition: { name: 'fade', mode: 'out-in', appear: true }
 })
 </script>
-
-<template>
-  <NuxtPage />
-</template>

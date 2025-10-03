@@ -26,11 +26,9 @@ const themeOverrides = {
     borderError: 'none',
     borderFocusError: 'none',
 
-    // 圓角 / 尺寸 / 內距 / 字級
     borderRadius: '0px',
     heightLarge: '40px',
     paddingMedium: '0 15px',
-    fontSizeMedium: '14px', // $n
 
     clearColor: 'rgba(255, 255, 255, 0.6)',
     clearColorHover: 'rgba(255, 255, 255, 1)'
@@ -52,9 +50,8 @@ const themeOverrides = {
 
         borderRadius: '0px',
         heightLarge: '40px',
-        // 單選模式的左右內距（多選是 paddingMultiple）
-        paddingSingle: '0 15px',
-        fontSizeLarge: '14px'
+
+        paddingSingle: '0 15px'
       },
       InternalSelectMenu: {
         color: 'rgba(10,12,26,.96)', // 面板背景
@@ -67,7 +64,7 @@ const themeOverrides = {
         optionColorPending: 'rgba(255,255,255,.06)',
         optionColorActive: 'rgba(0,255,170, 0)',
         optionHeight: '36px',
-        optionFontSize: '14px',
+
         optionPadding: '10px 14px',
         optionCheckColor: ' rgba(255, 255, 255, 1)'
       }
@@ -77,10 +74,13 @@ const themeOverrides = {
     itemTextColor: 'rgba(255, 255, 255, 0.7)',
     itemTextColorHover: '#fff',
     itemTextColorActive: 'rgb(218, 201, 166)',
-    itemColorActive: 'rgb(218, 201, 166, 0)', // 你想要的主色
+    itemColorActive: 'rgb(218, 201, 166, 0)',
     itemBorderActive: 'none',
     buttonColor: 'transparent',
-    buttonIconColor: '#fff'
+    buttonColorHover: 'rgb(218, 201, 166)',
+    buttonIconColor: '#fff',
+    buttonBorder: 'none',
+    buttonBorderHover: 'none'
   }
 }
 </script>

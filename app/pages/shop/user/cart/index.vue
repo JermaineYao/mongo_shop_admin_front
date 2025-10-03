@@ -7,9 +7,11 @@ import gsap from 'gsap'
 definePageMeta({
   layout: 'shop-layout',
   requireLoginCheck: true,
-  requireLogin: true,
-  requireActive: true
+  requireLogin: true
 })
+
+const userStore = useUserStore()
+const { user, isUserLogin } = storeToRefs(userStore)
 
 const { queryMyCartApi, updateCartApi, removeFromCartApi, emptyCartApi, createOrderApi } =
   useUserApi()
@@ -19,6 +21,8 @@ const cartSummary = reactive({ totalQuantity: 0, grandTotal: 0 })
 
 // 查詢我的購物車
 function queryMyCart() {
+  if (!isUserLogin.value) return
+
   queryMyCartApi().then((res) => {
     if (res.status === 'success') {
       const data = res.data.products
@@ -36,10 +40,17 @@ function queryMyCart() {
 }
 
 // 預設查詢
-queryMyCart()
+if (import.meta.client) {
+  queryMyCart()
+}
 
 // 更新購物車
 function updateCart(v, productId, index) {
+  if (!isUserLogin.value) {
+    navigateTo('/shop/products')
+    return
+  }
+
   const query = {
     productId,
     quantity: v
@@ -52,8 +63,10 @@ function updateCart(v, productId, index) {
       }
     })
     .catch((err) => {
-      if (err) {
-        myCart.value[index].reqMsg = '請稍後再試'
+      if (err.status === 401) {
+        navigateTo('/shop/products')
+      } else {
+        myCart.value[index].reqMsg = err.data.message
         myCart.value[index].reqResult = false
 
         setTimeout(() => {
@@ -66,6 +79,11 @@ function updateCart(v, productId, index) {
 
 // 移除購物車商品
 function removeFromCart(cartId, index) {
+  if (!isUserLogin.value) {
+    navigateTo('/shop/products')
+    return
+  }
+
   const query = { cartId }
 
   removeFromCartApi(query)
@@ -75,8 +93,10 @@ function removeFromCart(cartId, index) {
       }
     })
     .catch((err) => {
-      if (err) {
-        myCart.value[index].reqMsg = '請稍後再試'
+      if (err.status === 401) {
+        navigateTo('/shop/products')
+      } else {
+        myCart.value[index].reqMsg = err.data.message
         myCart.value[index].reqResult = false
 
         setTimeout(() => {
@@ -89,17 +109,25 @@ function removeFromCart(cartId, index) {
 
 // 清空購物車
 function emptyCart() {
-  emptyCartApi().then((res) => {
-    if (res.status === 'success') {
-      navigateTo('/shop/products')
-    }
-  })
+  if (!isUserLogin.value) {
+    navigateTo('/shop/products')
+    return
+  }
+
+  emptyCartApi()
+    .then((res) => {
+      if (res.status === 'success') {
+        navigateTo('/shop/products')
+      }
+    })
+    .catch((err) => {
+      if (err.status === 401) {
+        navigateTo('/shop/products')
+      }
+    })
 }
 
 // 下訂單
-const userStore = useUserStore()
-const { user } = storeToRefs(userStore)
-
 const orderFormRef = ref(null)
 
 const orderQuery = reactive({
@@ -128,6 +156,13 @@ function clearServerError(field) {
 const showOrderForm = ref(false)
 
 function toggleOrderForm(v) {
+  if (!isUserLogin.value) {
+    navigateTo('/shop/products')
+    return
+  }
+
+  if (!user.value.active) return
+
   showOrderForm.value = v
 
   orderQuery.receiverAddress = user.value.address
@@ -203,7 +238,15 @@ const rules = {
   ]
 }
 
+const reqResult = ref(false)
+const reqMsg = ref('')
+
 function createOrder() {
+  if (!isUserLogin.value) {
+    navigateTo('/shop/products')
+    return
+  }
+
   if (!user.value.active) return
 
   const check = []
@@ -233,11 +276,28 @@ function createOrder() {
     note: orderQuery.note
   }
 
-  createOrderApi(query).then((res) => {
-    if (res.status === 'success') {
-      navigateTo('/shop/products')
-    }
-  })
+  createOrderApi(query)
+    .then((res) => {
+      if (res.status === 'success') {
+        navigateTo('/shop/products')
+      }
+    })
+    .catch((err) => {
+      reqMsg.value = err.data.message
+
+      if (err.status === 401) {
+        navigateTo('/shop/products')
+      } else if (err.status === 403) {
+        setTimeout(() => {
+          user.value.active = false
+          reqMsg.value = ''
+        }, 3000)
+      } else {
+        setTimeout(() => {
+          reqMsg.value = ''
+        }, 3000)
+      }
+    })
 }
 </script>
 
@@ -276,7 +336,7 @@ function createOrder() {
 
       <hr />
 
-      <section v-if="showOrderForm" id="order-form">
+      <section v-if="showOrderForm && user.active" id="order-form">
         <n-form ref="orderFormRef" :model="orderQuery" :rules="rules">
           <n-form-item
             label="收件人姓名"
@@ -326,6 +386,8 @@ function createOrder() {
         </n-form>
 
         <div class="action_wrap">
+          <span :class="[reqResult ? 'res-msg success' : 'res-msg failed']">{{ reqMsg }}</span>
+
           <div class="btn" @click="toggleOrderForm(false)">
             <span>取消下單</span>
           </div>
@@ -336,7 +398,7 @@ function createOrder() {
         </div>
       </section>
 
-      <hr v-if="showOrderForm" />
+      <hr v-if="showOrderForm && user.active" />
 
       <div class="btn empty-cart" @click="emptyCart">
         <span>清空購物車</span>
