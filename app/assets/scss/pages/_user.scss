@@ -118,6 +118,7 @@
           height: 170px;
           border-radius: 50%;
           cursor: pointer;
+          overflow: hidden;
 
           @include rwd-min(1920px) {
             width: 200px;

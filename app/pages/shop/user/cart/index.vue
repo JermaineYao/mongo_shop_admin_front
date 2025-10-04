@@ -19,24 +19,32 @@ const { queryMyCartApi, updateCartApi, removeFromCartApi, emptyCartApi, createOr
 const myCart = ref([])
 const cartSummary = reactive({ totalQuantity: 0, grandTotal: 0 })
 
+const loading = ref(false)
+
 // 查詢我的購物車
-function queryMyCart() {
+function queryMyCart(requireLoading = true) {
   if (!isUserLogin.value) return
 
-  queryMyCartApi().then((res) => {
-    if (res.status === 'success') {
-      const data = res.data.products
+  if (requireLoading) loading.value = true
 
-      data.forEach((f) => {
-        f.reqMsg = ''
-        f.reqResult = false
-      })
-      myCart.value = [...data]
+  queryMyCartApi()
+    .then((res) => {
+      if (res.status === 'success') {
+        const data = res.data.products
 
-      cartSummary.totalQuantity = res.data.summary.totalQuantity
-      cartSummary.grandTotal = res.data.summary.grandTotal
-    }
-  })
+        data.forEach((f) => {
+          f.reqMsg = ''
+          f.reqResult = false
+        })
+        myCart.value = [...data]
+
+        cartSummary.totalQuantity = res.data.summary.totalQuantity
+        cartSummary.grandTotal = res.data.summary.grandTotal
+      }
+    })
+    .finally(() => {
+      loading.value = false
+    })
 }
 
 // 預設查詢
@@ -59,7 +67,7 @@ function updateCart(v, productId, index) {
   updateCartApi(query)
     .then((res) => {
       if (res.status === 'success') {
-        queryMyCart()
+        queryMyCart(false)
       }
     })
     .catch((err) => {
@@ -89,7 +97,7 @@ function removeFromCart(cartId, index) {
   removeFromCartApi(query)
     .then((res) => {
       if (res.status === 'success') {
-        queryMyCart()
+        queryMyCart(false)
       }
     })
     .catch((err) => {
@@ -249,6 +257,8 @@ function createOrder() {
 
   if (!user.value.active) return
 
+  loading.value = true
+
   const check = []
 
   for (const key in isValidatedPass) {
@@ -279,7 +289,8 @@ function createOrder() {
   createOrderApi(query)
     .then((res) => {
       if (res.status === 'success') {
-        navigateTo('/shop/products')
+        const orderNo = res.orderNo
+        navigateTo(`/shop/user/order/${orderNo}`)
       }
     })
     .catch((err) => {
@@ -298,6 +309,9 @@ function createOrder() {
         }, 3000)
       }
     })
+    .finally(() => {
+      loading.value = false
+    })
 }
 </script>
 
@@ -307,7 +321,7 @@ function createOrder() {
       <span>我的購物車</span>
     </div>
 
-    <main v-if="cartSummary.grandTotal > 0" class="cart_container">
+    <main v-if="cartSummary.grandTotal > 0" v-loading="loading" class="cart_container">
       <section class="cart-operation">
         <article class="cart-summary">
           <div class="total-quantity_wrap">
@@ -442,7 +456,7 @@ function createOrder() {
       </section>
     </main>
 
-    <main v-else class="cart_container empty">
+    <main v-else v-loading="loading" class="cart_container empty">
       <span>購物車是空的</span>
     </main>
   </div>

@@ -48,7 +48,8 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiBase: '/api/v1' // 前端一律打相對路徑
+      // apiBase: 'https://mongo-shop.vercel.app/api/v1'
+      apiBase: '/api/v1'
     }
   },
   nitro: {

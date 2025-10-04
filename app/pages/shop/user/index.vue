@@ -41,6 +41,7 @@ if (import.meta.client && isUserLogin.value) {
 }
 
 // 圖片
+const imgLoading = ref(false)
 const fileTypes = ['jpg', 'png', 'jpeg', 'gif']
 
 function setPhoto(e) {
@@ -67,18 +68,29 @@ function uploadMyPhoto(file) {
 
   if (!file) return
 
+  imgLoading.value = true
+
   const formData = new FormData()
   formData.append('file', file)
 
-  uploadMyPhotoApi(formData).then((res) => {
-    if (res.status === 'success') {
-      const photoData = res.data.photo
+  uploadMyPhotoApi(formData)
+    .then((res) => {
+      if (res.status === 'success') {
+        const photoData = res.data.photo
 
-      for (const key in user.value.photo) {
-        user.value.photo[key] = photoData[key]
+        for (const key in user.value.photo) {
+          user.value.photo[key] = photoData[key]
+        }
       }
-    }
-  })
+    })
+    .catch((err) => {
+      if (err.status === 401) {
+        navigateTo('/shop/products')
+      }
+    })
+    .finally(() => {
+      imgLoading.value = false
+    })
 }
 
 function triggerUpload() {
@@ -99,13 +111,24 @@ function deleteMyPhoto() {
     return
   }
 
-  deleteMyPhotoApi().then((res) => {
-    if (res.status === 'success') {
-      for (const key in user.value.photo) {
-        user.value.photo[key] = null
+  imgLoading.value = true
+
+  deleteMyPhotoApi()
+    .then((res) => {
+      if (res.status === 'success') {
+        for (const key in user.value.photo) {
+          user.value.photo[key] = null
+        }
       }
-    }
-  })
+    })
+    .catch((err) => {
+      if (err.status === 401) {
+        navigateTo('/shop/products')
+      }
+    })
+    .finally(() => {
+      imgLoading.value = false
+    })
 }
 
 // 停用,啟用 帳號
@@ -123,6 +146,10 @@ function toggleAccountEnabled(enable) {
     })
     .catch((err) => {
       if (err) user.value.active = !enable
+
+      if (err.status === 401) {
+        navigateTo('/shop/products')
+      }
     })
 }
 
@@ -215,9 +242,15 @@ function updateContact() {
       }
     })
     .catch((err) => {
-      if (err) {
-        contactResFailed.value = err.message
+      contactResFailed.value = err.data.message
+
+      if (err.status === 401) {
+        navigateTo('/shop/products')
       }
+
+      setTimeout(() => {
+        contactResFailed.value = ''
+      }, 3000)
     })
 }
 
@@ -392,9 +425,15 @@ function updatePwd() {
       }
     })
     .catch((err) => {
-      if (err) {
-        pwdResFailed.value = err.message
+      pwdResFailed.value = err.data.message
+
+      if (err.status === 401) {
+        navigateTo('/shop/products')
       }
+
+      setTimeout(() => {
+        pwdResFailed.value = ''
+      }, 3000)
     })
 }
 </script>
@@ -415,6 +454,7 @@ function updatePwd() {
 
           <div
             v-if="user.photo.url"
+            v-loading="imgLoading"
             class="user-img"
             :style="{
               background: `url(${user.photo.url}) center/cover no-repeat`

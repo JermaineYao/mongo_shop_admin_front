@@ -41,7 +41,11 @@ const baseUrl = config.public.apiBase
 // 是否預設請求
 const isDefaultQuery = ref(true)
 
-const { data: resData, refresh } = await useAsyncData(
+const {
+  data: resData,
+  pending,
+  refresh
+} = await useAsyncData(
   () => `products-${route.query.page}`,
   async () => {
     const hasQuery = Object.entries(route.query).length === 0 ? false : true
@@ -121,6 +125,7 @@ function queryByUser(setSearchCondition = false) {
   refresh()
 }
 
+const loading = computed(() => pending.value)
 const products = computed(() => resData.value?.data ?? [])
 const totalPages = computed(() => resData.value?.totalPages ?? 0)
 
@@ -336,6 +341,7 @@ function closeSearch() {
                 <span class="category">{{ getCategory(p.category) }}</span>
 
                 <div
+                  v-loading="loading"
                   class="product-image"
                   :style="{
                     background: `url(${p.mainPhoto.url}) center/cover no-repeat`

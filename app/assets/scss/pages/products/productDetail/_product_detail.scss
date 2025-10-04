@@ -54,6 +54,22 @@
     }
   }
 
+  .return_wrap {
+    @include flex(row, center, flex-start, flex-start);
+    padding: 0;
+
+    width: 100%;
+    max-width: 1440px;
+
+    @include rwd-max(1024px) {
+      padding: 20px 30px;
+    }
+
+    @include rwd-max(1024px) {
+      padding: 20px;
+    }
+  }
+
   section.product-names {
     @include flex(column, nowrap, stretch, flex-start);
 

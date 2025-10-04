@@ -17,16 +17,24 @@ const { queryOrderApi, cancelOrderApi } = useUserApi()
 
 const order = reactive({})
 
-function queryOrder() {
-  queryOrderApi(orderNo).then((res) => {
-    if (res.status === 'success') {
-      const data = res.data
+const loading = ref(false)
 
-      for (const key in data) {
-        order[key] = data[key]
+function queryOrder() {
+  loading.value = true
+
+  queryOrderApi(orderNo)
+    .then((res) => {
+      if (res.status === 'success') {
+        const data = res.data
+
+        for (const key in data) {
+          order[key] = data[key]
+        }
       }
-    }
-  })
+    })
+    .finally(() => {
+      loading.value = false
+    })
 }
 
 // 預設查詢
@@ -54,6 +62,8 @@ function cancelOrder() {
     return
   }
 
+  loading.value = true
+
   cancelOrderApi(order._id)
     .then((res) => {
       if (res.status === 'success') {
@@ -76,12 +86,15 @@ function cancelOrder() {
         }, 3000)
       }
     })
+    .finally(() => {
+      loading.value = false
+    })
 }
 </script>
 
 <template>
   <div class="page order-detail">
-    <main class="order-detail_container">
+    <main v-loading="loading" class="order-detail_container">
       <div class="btn go-back" @click="navigateTo('/shop/user/order')">
         <IconReturnLeft />
         <span>回到我的訂單</span>

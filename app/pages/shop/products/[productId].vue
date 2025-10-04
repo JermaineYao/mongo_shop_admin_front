@@ -16,7 +16,11 @@ const baseUrl = config.public.apiBase
 const route = useRoute()
 const productId = route.params.productId
 
-const { data: product, refresh } = await useAsyncData(
+const {
+  data: product,
+  pending,
+  refresh
+} = await useAsyncData(
   () => `product-${productId}`,
   async () => {
     const $rf = useRequestFetch()
@@ -28,6 +32,8 @@ const { data: product, refresh } = await useAsyncData(
     return res.data
   }
 )
+
+const loading = computed(() => pending.value)
 
 const userStore = useUserStore()
 const { isUserLogin } = storeToRefs(userStore)
@@ -82,7 +88,7 @@ function updateCart() {
     })
     .catch((err) => {
       if (err) {
-        reqMsg.cart = '請稍後再試'
+        reqMsg.cart = err.data.message
         reqResult.cart = false
 
         setTimeout(() => {
@@ -96,7 +102,6 @@ function updateCart() {
 // 新增,移除 我的最愛
 function toggleFavorite() {
   if (!isUserLogin.value) {
-    navigateTo('/shop/products')
     return
   }
 
@@ -118,8 +123,12 @@ function toggleFavorite() {
       }
     })
     .catch((err) => {
+      if (err.status === 401) {
+        isUserLogin.value = false
+      }
+
       if (err) {
-        reqMsg.favorite = '請稍後再試'
+        reqMsg.favorite = err.data.message
         reqResult.favorite = false
 
         setTimeout(() => {
@@ -148,12 +157,14 @@ function goBack() {
     >
       <div class="page-bg"></div>
 
-      <div class="btn go-back" @click="goBack">
-        <IconReturnLeft />
-        <span>回上一頁</span>
+      <div class="return_wrap">
+        <div class="btn go-back" @click="goBack">
+          <IconReturnLeft />
+          <span>回上一頁</span>
+        </div>
       </div>
 
-      <section class="product-names product-item">
+      <section v-loading="loading" class="product-names product-item">
         <article class="names_wrap">
           <span class="name-main">{{ product?.productNameMain }}</span>
           <span class="name-sub">{{ product?.productNameSub }}</span>
@@ -162,7 +173,7 @@ function goBack() {
         <span class="category">{{ getCategory(product?.category) }}</span>
       </section>
 
-      <section class="cart-operation product-item">
+      <section v-loading="loading" class="cart-operation product-item">
         <article class="product-price">
           <div class="price_wrap">
             <span class="price">{{ formatCurrency(product?.price) }}</span>
@@ -205,7 +216,7 @@ function goBack() {
         </div>
       </section>
 
-      <section class="product-main product-item">
+      <section v-loading="loading" class="product-main product-item">
         <article class="product-imgs">
           <div
             id="img-display"
