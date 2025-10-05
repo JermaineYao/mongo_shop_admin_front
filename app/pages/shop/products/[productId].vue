@@ -16,19 +16,13 @@ const baseUrl = config.public.apiBase
 const route = useRoute()
 const productId = route.params.productId
 
-const {
-  data: product,
-  pending,
-  refresh
-} = await useAsyncData(
+const { data: product, pending } = await useAsyncData(
   () => `product-${productId}`,
   async () => {
-    const reqHeaders = import.meta.server ? useRequestHeaders(['cookie']) : {}
+    const $rf = useRequestFetch()
 
-    const res = await $fetch(`${baseUrl}/product/${productId}`, {
-      method: 'GET',
-      credentials: 'include',
-      headers: import.meta.server ? { cookie: reqHeaders.cookie || '' } : undefined
+    const res = await $rf(`${baseUrl}/product/${productId}`, {
+      method: 'GET'
     })
 
     return res.data
