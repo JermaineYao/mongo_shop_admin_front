@@ -42,7 +42,7 @@ export default defineNuxtConfig({
     routeRules: {
       '/api/v1/**': {
         // 開發時轉到本機；上線可用環境變數覆蓋（見下方備註）
-        proxy: process.env.API_PROXY ?? 'http://127.0.0.1:1000/api/v1/**'
+        proxy: process.env.NUXT_API_PROXY ?? 'http://127.0.0.1:1000/api/v1/**'
       },
       '/shop/user': { ssr: false },
       '/shop/user/cart': { ssr: false },
