@@ -8,7 +8,7 @@ export const useUserApi = () => {
 
   // 登出
   function signOutApi() {
-    return $http.get('/user/sign_out')
+    return $http.post('/user/sign_out')
   }
 
   // 註冊前檢查帳號 信箱是否已被使用
