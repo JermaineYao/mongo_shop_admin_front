@@ -23,10 +23,12 @@ const {
 } = await useAsyncData(
   () => `product-${productId}`,
   async () => {
-    const $rf = useRequestFetch()
+    const reqHeaders = import.meta.server ? useRequestHeaders(['cookie']) : {}
 
-    const res = await $rf(`${baseUrl}/product/${productId}`, {
-      method: 'GET'
+    const res = await $fetch(`${baseUrl}/product/${productId}`, {
+      method: 'GET',
+      credentials: 'include',
+      headers: import.meta.server ? { cookie: reqHeaders.cookie || '' } : undefined
     })
 
     return res.data
