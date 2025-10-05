@@ -50,11 +50,14 @@ const rules = {
 
 const { forgotPwdApi } = useUserApi()
 const querySuccessMsg = ref('')
+const loading = ref(false)
 
 function queryResetLink() {
   querySuccessMsg.value = ''
 
   if (!isValidatedPass.value) return
+
+  loading.value = true
 
   const query = {
     email: user.email
@@ -67,14 +70,16 @@ function queryResetLink() {
       }
     })
     .catch((err) => {
-      const msg = err.message
-      serverErrors.email = msg
+      serverErrors.email = '請檢察信箱是否正確'
+    })
+    .finally(() => {
+      loading.value = false
     })
 }
 </script>
 
 <template>
-  <div class="page forgot">
+  <div v-loading="loading" class="page forgot">
     <main class="forgot_container">
       <n-form :model="user" :rules="rules">
         <n-form-item

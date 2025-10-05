@@ -57,7 +57,15 @@ export default defineNuxtConfig({
       '/api/v1/**': {
         // 開發時轉到本機；上線可用環境變數覆蓋（見下方備註）
         proxy: process.env.API_PROXY ?? 'http://127.0.0.1:1000/api/v1/**'
-      }
+      },
+      '/shop/user': { ssr: false },
+      '/shop/user/cart': { ssr: false },
+      '/shop/user/order': { ssr: false },
+      '/shop/user/order/**': { ssr: false },
+      '/shop/user/login': { ssr: false },
+      '/shop/register': { ssr: false },
+      '/shop/forgot/email': { ssr: false },
+      '/shop/forgot/set_pwd/**': { ssr: false }
     }
   }
 })

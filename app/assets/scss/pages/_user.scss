@@ -242,8 +242,16 @@
           font-size: $s;
         }
 
+        .pwd-value {
+          font-weight: 900;
+        }
+
         .n-form-item {
           width: 100%;
+
+          .n-form-item-label__text {
+            color: $white !important;
+          }
         }
       }
     }

@@ -11,20 +11,27 @@ const { isUserLogin } = storeToRefs(userStore)
 const { queryMyFavoriteApi, toggleFavoriteApi, updateCartApi } = useUserApi()
 
 const myFavorite = ref([])
+const loading = ref(false)
 
-function queryMyFavorite() {
+function queryMyFavorite(requireLoading = true) {
   if (!isUserLogin.value) return
 
-  queryMyFavoriteApi().then((res) => {
-    if (res.status === 'success') {
-      const data = res.data
-      data.forEach((f) => {
-        f.reqMsg = ''
-        f.reqResult = false
-      })
-      myFavorite.value = [...res.data]
-    }
-  })
+  if (requireLoading) loading.value = true
+
+  queryMyFavoriteApi()
+    .then((res) => {
+      if (res.status === 'success') {
+        const data = res.data
+        data.forEach((f) => {
+          f.reqMsg = ''
+          f.reqResult = false
+        })
+        myFavorite.value = [...res.data]
+      }
+    })
+    .finally(() => {
+      loading.value = false
+    })
 }
 
 // 預設查詢
@@ -59,7 +66,8 @@ function updateCart(productId, index) {
       }
     })
     .catch((err) => {
-      myFavorite.value[index].reqMsg = err.data.message
+      const msg = err.data.msg || err.message
+      myFavorite.value[index].reqMsg = msg
 
       if (err.status === 401) {
         navigateTo('/shop/products')
@@ -88,11 +96,12 @@ function toggleFavorite(productId, index) {
   toggleFavoriteApi(query)
     .then((res) => {
       if (res.status === 'success') {
-        queryMyFavorite()
+        queryMyFavorite(false)
       }
     })
     .catch((err) => {
-      myFavorite.value[index].reqMsg = err.data.message
+      const msg = err.data.msg || err.message
+      myFavorite.value[index].reqMsg = msg
 
       if (err.status === 401) {
         navigateTo('/shop/products')
@@ -109,7 +118,7 @@ function toggleFavorite(productId, index) {
 </script>
 
 <template>
-  <div class="page favorite">
+  <div v-loading="loading" class="page favorite">
     <div class="header">
       <span>我的最愛</span>
     </div>

@@ -13,20 +13,27 @@ const { isUserLogin } = storeToRefs(userStore)
 const { queryMyOrdersApi } = useUserApi()
 
 const orders = ref([])
+const loading = ref(true)
 
 function queryMyOrders() {
   if (!isUserLogin.value) return
 
-  queryMyOrdersApi().then((res) => {
-    if (res.status === 'success') {
-      const data = res.data
-      data.forEach((d) => {
-        d.open = false
-      })
+  loading.value = true
 
-      orders.value = [...data]
-    }
-  })
+  queryMyOrdersApi()
+    .then((res) => {
+      if (res.status === 'success') {
+        const data = res.data
+        data.forEach((d) => {
+          d.open = false
+        })
+
+        orders.value = [...data]
+      }
+    })
+    .finally(() => {
+      loading.value = false
+    })
 }
 
 // 預設查詢
@@ -43,7 +50,7 @@ function toOrder(orderNo) {
 </script>
 
 <template>
-  <div class="page order">
+  <div v-loading="loading" class="page order">
     <div class="header">
       <span>我的訂單</span>
     </div>

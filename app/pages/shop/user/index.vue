@@ -158,6 +158,7 @@ const phoneRule = '手機號碼格式 09xx-xxx-xxx'
 const editContact = ref(false)
 const contactResSuccess = ref('')
 const contactResFailed = ref('')
+const contactLoading = ref(false)
 
 function toggleEditContact(edit) {
   if (!isUserLogin.value) {
@@ -219,6 +220,8 @@ function updateContact() {
     return
   }
 
+  contactLoading.value = true
+
   contactResFailed.value = ''
   const query = {}
 
@@ -242,7 +245,8 @@ function updateContact() {
       }
     })
     .catch((err) => {
-      contactResFailed.value = err.data.message
+      const msg = err.data.msg || err.message
+      contactResFailed.value = msg
 
       if (err.status === 401) {
         navigateTo('/shop/products')
@@ -252,12 +256,16 @@ function updateContact() {
         contactResFailed.value = ''
       }, 3000)
     })
+    .finally(() => {
+      contactLoading.value = false
+    })
 }
 
 // 密碼
 const editPwd = ref(false)
 const pwdResSuccess = ref('')
 const pwdResFailed = ref('')
+const pwdLoading = ref(false)
 
 const myPwd = reactive({
   pwdCurrent: '',
@@ -408,6 +416,8 @@ function updatePwd() {
 
   if (check.length > 0) return
 
+  pwdLoading.value = true
+
   const query = {
     pwdCurrent: myPwd.pwdCurrent,
     newPWD: myPwd.newPWD
@@ -425,7 +435,8 @@ function updatePwd() {
       }
     })
     .catch((err) => {
-      pwdResFailed.value = err.data.message
+      const msg = err.data.msg || err.message
+      pwdResFailed.value = msg
 
       if (err.status === 401) {
         navigateTo('/shop/products')
@@ -434,6 +445,9 @@ function updatePwd() {
       setTimeout(() => {
         pwdResFailed.value = ''
       }, 3000)
+    })
+    .finally(() => {
+      pwdLoading.value = false
     })
 }
 </script>
@@ -468,8 +482,8 @@ function updatePwd() {
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
             viewBox="0 0 32 32"
-            width="200px"
-            height="200px"
+            width="170px"
+            height="170px"
             @click="triggerUpload"
           >
             <path
@@ -508,7 +522,7 @@ function updatePwd() {
         <span :class="[user.active ? 'is-active' : '']">啟用</span>
       </div>
 
-      <section class="user-contact user-item">
+      <section v-loading="contactLoading" class="user-contact user-item">
         <div class="action_wrap">
           <span v-show="contactResSuccess.length > 0" class="query-res success">{{
             contactResSuccess
@@ -525,7 +539,7 @@ function updatePwd() {
 
         <n-form :model="user" :rules="contactRules" class="contact-content">
           <article class="contact-item">
-            <span class="caption">手機號碼</span>
+            <span v-if="!editContact" class="caption">手機號碼</span>
 
             <span v-if="!editContact" class="contact-value">{{
               user.phoneNumber ?? '尚未填寫'
@@ -533,7 +547,7 @@ function updatePwd() {
 
             <n-form-item
               v-else
-              :show-label="false"
+              label="手機號碼"
               path="phoneNumber"
               :feedback="serverContactErrors.phoneNumber"
               :validation-status="serverContactErrors.phoneNumber ? 'error' : undefined"
@@ -548,18 +562,18 @@ function updatePwd() {
           </article>
 
           <article class="contact-item">
-            <span class="caption">地址</span>
+            <span v-if="!editContact" class="caption">地址</span>
 
             <span v-if="!editContact" class="contact-value">{{ user.address ?? '尚未填寫' }}</span>
 
-            <n-form-item v-else :show-label="false">
+            <n-form-item v-else label="地址">
               <n-input v-model:value="user.address" placeholder="" />
             </n-form-item>
           </article>
         </n-form>
       </section>
 
-      <section class="user-pwd user-item">
+      <section v-loading="pwdLoading" class="user-pwd user-item">
         <div class="action_wrap">
           <span v-show="pwdResSuccess.length > 0" class="query-res success">{{
             pwdResSuccess
@@ -574,13 +588,13 @@ function updatePwd() {
 
         <n-form :model="myPwd" :rules="pwdRules" class="pwd-content">
           <article class="pwd-item">
-            <span class="caption">密碼</span>
+            <span v-if="!editPwd" class="caption">密碼</span>
 
             <span v-if="!editPwd" class="pwd-value">．．．．．．．．</span>
 
             <n-form-item
               v-else
-              :show-label="false"
+              label="密碼"
               path="pwdCurrent"
               :feedback="serverPwdErrors.pwdCurrent"
               :validation-status="serverPwdErrors.pwdCurrent ? 'error' : undefined"
@@ -611,10 +625,8 @@ function updatePwd() {
           </article>
 
           <article v-if="editPwd" class="pwd-item">
-            <span class="caption">新密碼</span>
-
             <n-form-item
-              :show-label="false"
+              label="新密碼"
               path="newPWD"
               :feedback="serverPwdErrors.newPWD"
               :validation-status="serverPwdErrors.newPWD ? 'error' : undefined"
@@ -645,10 +657,8 @@ function updatePwd() {
           </article>
 
           <article v-if="editPwd" class="pwd-item">
-            <span class="caption">新密碼確認</span>
-
             <n-form-item
-              :show-label="false"
+              label="確認新密碼"
               path="newPWDConfirm"
               :feedback="serverPwdErrors.newPWDConfirm"
               :validation-status="serverPwdErrors.newPWDConfirm ? 'error' : undefined"

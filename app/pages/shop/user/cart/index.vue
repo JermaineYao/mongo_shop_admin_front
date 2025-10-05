@@ -74,7 +74,8 @@ function updateCart(v, productId, index) {
       if (err.status === 401) {
         navigateTo('/shop/products')
       } else {
-        myCart.value[index].reqMsg = err.data.message
+        const msg = err.data.msg || err.message
+        myCart.value[index].reqMsg = msg
         myCart.value[index].reqResult = false
 
         setTimeout(() => {
@@ -104,7 +105,8 @@ function removeFromCart(cartId, index) {
       if (err.status === 401) {
         navigateTo('/shop/products')
       } else {
-        myCart.value[index].reqMsg = err.data.message
+        const msg = err.data.msg || err.message
+        myCart.value[index].reqMsg = msg
         myCart.value[index].reqResult = false
 
         setTimeout(() => {
@@ -294,7 +296,8 @@ function createOrder() {
       }
     })
     .catch((err) => {
-      reqMsg.value = err.data.message
+      const msg = err.data.msg || err.message
+      reqMsg.value = msg
 
       if (err.status === 401) {
         navigateTo('/shop/products')
@@ -316,12 +319,12 @@ function createOrder() {
 </script>
 
 <template>
-  <div class="page cart">
+  <div v-loading="loading" class="page cart">
     <div class="header">
       <span>我的購物車</span>
     </div>
 
-    <main v-if="cartSummary.grandTotal > 0" v-loading="loading" class="cart_container">
+    <main v-if="cartSummary.grandTotal > 0" class="cart_container">
       <section class="cart-operation">
         <article class="cart-summary">
           <div class="total-quantity_wrap">
@@ -456,7 +459,7 @@ function createOrder() {
       </section>
     </main>
 
-    <main v-else v-loading="loading" class="cart_container empty">
+    <main v-else class="cart_container empty">
       <span>購物車是空的</span>
     </main>
   </div>

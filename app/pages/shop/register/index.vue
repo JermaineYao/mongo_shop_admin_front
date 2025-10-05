@@ -19,6 +19,8 @@ const user = reactive({
   address: ''
 })
 
+const orderFormRef = ref(null)
+
 const pwdRule = '至少8位元、包含一個大寫、小寫英文字母、數字、特殊字元'
 const phoneRule = '手機號碼格式 09xx-xxx-xxx'
 
@@ -68,7 +70,7 @@ const rules = {
               }
             })
             .catch((err) => {
-              const msg = err.message
+              const msg = err.data.msg || err.message
               serverErrors.account = msg
               isValidatedPass.account = false
             })
@@ -102,7 +104,7 @@ const rules = {
               }
             })
             .catch((err) => {
-              const msg = err.message
+              const msg = err.data.msg || err.message
               serverErrors.email = msg
               isValidatedPass.email = false
             })
@@ -115,9 +117,11 @@ const rules = {
     { required: true, message: '密碼必填', trigger: 'blur' },
     {
       async validator(_, value) {
-        user.pwdConfirm = ''
-        serverErrors.pwdConfirm = ''
-        isValidatedPass.pwdConfirm = false
+        if (user.pwdConfirm.trim().length > 0 && value !== user.pwdConfirm.trim()) {
+          user.pwdConfirm = ''
+          serverErrors.pwdConfirm = ''
+          isValidatedPass.pwdConfirm = false
+        }
 
         if (value.trim().length === 0) {
           isValidatedPass.pwd = false
@@ -196,9 +200,12 @@ function togglePwdContent(field) {
 }
 
 // 註冊
+const loading = ref(false)
 const registerErr = ref('')
 
 function resgister() {
+  orderFormRef.value?.validate()
+
   registerErr.value = ''
 
   const check = []
@@ -207,6 +214,8 @@ function resgister() {
   }
 
   if (check.length > 0) return
+
+  loading.value = true
 
   const query = {}
 
@@ -223,16 +232,23 @@ function resgister() {
       }
     })
     .catch((err) => {
-      const msg = err.message
+      const msg = err.data.msg || err.message
       registerErr.value = msg
+
+      setTimeout(() => {
+        registerErr.value = ''
+      }, 3000)
+    })
+    .finally(() => {
+      loading.value = false
     })
 }
 </script>
 
 <template>
-  <div class="page register">
+  <div v-loading="loading" class="page register">
     <main class="register_container">
-      <n-form :model="user" :rules="rules">
+      <n-form ref="orderFormRef" :model="user" :rules="rules">
         <n-form-item
           label="帳號"
           path="account"
@@ -340,8 +356,7 @@ function resgister() {
           <span>註冊</span>
         </div>
 
-        <!-- <span v-if="registerErr.length > 0" class="register-err">{{ registerErr }}</span> -->
-        <span class="register-err">註冊失敗，請稍後再試</span>
+        <span v-if="registerErr.length > 0" class="register-err">{{ registerErr }}</span>
       </div>
     </main>
   </div>

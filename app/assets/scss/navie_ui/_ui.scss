@@ -12,8 +12,11 @@
 .n-input .n-input__textarea-el {
   caret-color: $white !important;
   color: $white !important;
-  // font-size: $n;
   letter-spacing: 1px;
+
+  @include rwd-min(1920px) {
+    font-size: $d;
+  }
 }
 
 .n-form-item-label__text {

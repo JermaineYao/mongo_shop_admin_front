@@ -15,6 +15,8 @@ const user = reactive({
   pwd: '@Test1234'
 })
 
+const loading = ref(false)
+
 const rules = {
   account: [{ required: true, message: '請輸入帳號', trigger: 'blur' }],
   pwd: [{ required: true, message: '請輸入密碼', trigger: 'blur' }]
@@ -40,6 +42,8 @@ const { signInApi } = useUserApi()
 function signIn() {
   if (user.account.trim() === '' || user.pwd.trim() === '') return
 
+  loading.value = true
+
   const query = {
     account: user.account.trim(),
     pwd: user.pwd.trim()
@@ -59,11 +63,14 @@ function signIn() {
         serverErrors.pwd = msg
       }
     })
+    .finally(() => {
+      loading.value = false
+    })
 }
 </script>
 
 <template>
-  <div class="page login">
+  <div v-loading="loading" class="page login">
     <main class="login_container">
       <n-form :model="user" :rules="rules">
         <n-form-item

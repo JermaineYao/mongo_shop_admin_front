@@ -88,7 +88,8 @@ function updateCart() {
     })
     .catch((err) => {
       if (err) {
-        reqMsg.cart = err.data.message
+        const msg = err.data.msg || err.message
+        reqMsg.cart = msg
         reqResult.cart = false
 
         setTimeout(() => {
@@ -128,7 +129,8 @@ function toggleFavorite() {
       }
 
       if (err) {
-        reqMsg.favorite = err.data.message
+        const msg = err.data.msg || err.message
+        reqMsg.favorite = msg
         reqResult.favorite = false
 
         setTimeout(() => {
@@ -148,7 +150,7 @@ function goBack() {
 </script>
 
 <template>
-  <div class="page product-detail">
+  <div v-loading="loading" class="page product-detail">
     <main
       class="product-detail_container"
       :style="{
@@ -164,7 +166,7 @@ function goBack() {
         </div>
       </div>
 
-      <section v-loading="loading" class="product-names product-item">
+      <section class="product-names product-item">
         <article class="names_wrap">
           <span class="name-main">{{ product?.productNameMain }}</span>
           <span class="name-sub">{{ product?.productNameSub }}</span>
@@ -173,7 +175,7 @@ function goBack() {
         <span class="category">{{ getCategory(product?.category) }}</span>
       </section>
 
-      <section v-loading="loading" class="cart-operation product-item">
+      <section class="cart-operation product-item">
         <article class="product-price">
           <div class="price_wrap">
             <span class="price">{{ formatCurrency(product?.price) }}</span>
@@ -186,6 +188,7 @@ function goBack() {
             }}</span>
 
             <IconFavorite v-if="product.addedToFavorite" @click="toggleFavorite" />
+
             <IconFaviroteEmpty v-if="!product.addedToFavorite" @click="toggleFavorite" />
           </div>
         </article>
@@ -216,7 +219,7 @@ function goBack() {
         </div>
       </section>
 
-      <section v-loading="loading" class="product-main product-item">
+      <section class="product-main product-item">
         <article class="product-imgs">
           <div
             id="img-display"

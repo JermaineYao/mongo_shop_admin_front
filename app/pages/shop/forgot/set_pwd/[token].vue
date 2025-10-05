@@ -36,9 +36,11 @@ const rules = {
     { required: true, message: '密碼必填', trigger: 'blur' },
     {
       async validator(_, value) {
-        user.confirmNewPWD = ''
-        serverErrors.confirmNewPWD = ''
-        isValidatedPass.confirmNewPWD = false
+        if (user.confirmNewPWD.trim().length > 0 && value !== user.confirmNewPWD.trim()) {
+          user.confirmNewPWD = ''
+          serverErrors.confirmNewPWD = ''
+          isValidatedPass.confirmNewPWD = false
+        }
 
         if (value.trim().length === 0) {
           isValidatedPass.newPWD = false
@@ -100,7 +102,8 @@ function togglePwdContent(field) {
 
 const { resetPwdApi } = useUserApi()
 
-// 註冊
+// 設定新密碼
+const loading = ref(false)
 const resetPwdErr = ref('')
 
 function resetPwd() {
@@ -112,6 +115,8 @@ function resetPwd() {
   }
 
   if (check.length > 0) return
+
+  loading.value = true
 
   const query = {
     newPWD: user.newPWD.trim(),
@@ -125,14 +130,21 @@ function resetPwd() {
       }
     })
     .catch((err) => {
-      const msg = err.message
+      const msg = err.data.msg || err.message
       resetPwdErr.value = msg
+
+      setTimeout(() => {
+        resetPwdErr.value = ''
+      }, 3000)
+    })
+    .finally(() => {
+      loading.value = false
     })
 }
 </script>
 
 <template>
-  <div class="page set-pwd">
+  <div v-loading="loading" class="page set-pwd">
     <main class="set-pwd_container">
       <n-form :model="user" :rules="rules">
         <n-form-item

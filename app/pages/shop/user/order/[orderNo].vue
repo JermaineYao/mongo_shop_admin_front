@@ -17,7 +17,7 @@ const { queryOrderApi, cancelOrderApi } = useUserApi()
 
 const order = reactive({})
 
-const loading = ref(false)
+const loading = ref(true)
 
 function queryOrder() {
   loading.value = true
@@ -71,7 +71,8 @@ function cancelOrder() {
       }
     })
     .catch((err) => {
-      reqMsg.value = err.data.message
+      const msg = err.data.msg || err.message
+      reqMsg.value = msg
 
       if (err.status === 401) {
         navigateTo('/shop/products')
@@ -93,8 +94,8 @@ function cancelOrder() {
 </script>
 
 <template>
-  <div class="page order-detail">
-    <main v-loading="loading" class="order-detail_container">
+  <div v-loading="loading" class="page order-detail">
+    <main class="order-detail_container">
       <div class="btn go-back" @click="navigateTo('/shop/user/order')">
         <IconReturnLeft />
         <span>回到我的訂單</span>

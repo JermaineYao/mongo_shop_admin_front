@@ -7,7 +7,6 @@ export default defineNuxtPlugin((nuxtApp) => {
       if (import.meta.server) return
 
       if (binding.value && !el.__vLoading) {
-        console.log('open')
         el.classList.add('loading_container')
 
         const wrap = document.createElement('div')
@@ -15,7 +14,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 
         wrap.innerHTML = `
         <div class="loading-box">
-          <span class="loading-text">請稍後</span>
+          <div class="logo-mobile"></div>
         </div>
       `
 
