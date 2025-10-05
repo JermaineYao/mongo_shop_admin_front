@@ -117,7 +117,7 @@ function toggleFavorite() {
         reqMsg.favorite = res.msg
         reqResult.favorite = true
 
-        refresh()
+        product.value.addedToFavorite = !product.value.addedToFavorite
 
         setTimeout(() => {
           reqMsg.favorite = ''
