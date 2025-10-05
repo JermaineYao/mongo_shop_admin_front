@@ -11,8 +11,8 @@ const productStore = useProductStore()
 const { productPath } = storeToRefs(productStore)
 
 const user = reactive({
-  account: 'sayoko',
-  pwd: '@Test1234'
+  account: '',
+  pwd: ''
 })
 
 const loading = ref(false)
